@@ -1,6 +1,7 @@
 package br.com.monthalcantara.projetofinal.entity;
 
 import br.com.monthalcantara.projetofinal.enums.Level;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Eventos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private Level Level;
 
     private String descricao;
@@ -31,6 +33,7 @@ public class Eventos implements Serializable {
     private String origem; //(Sistema ou Serviço que originou o evento) Criar enums
 
     @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime data;//(Data do evento)
 
     private Integer quantidade; //(Quantidade de Eventos de mesmo tipo)
