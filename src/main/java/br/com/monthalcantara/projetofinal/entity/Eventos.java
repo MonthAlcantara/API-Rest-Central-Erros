@@ -23,13 +23,16 @@ public class Eventos implements Serializable {
     private Long id;
 
     private Level Level;
-    private String descricaoDoEvento;
-    private String logDoEvento;
+
+    private String descricao;
+
+    private String log;
 
     private String origem; //(Sistema ou Serviço que originou o evento) Criar enums
 
     @CreatedDate
-    private LocalDateTime data;//(Data do evento),
+    private LocalDateTime data;//(Data do evento)
+
     private Integer quantidade; //(Quantidade de Eventos de mesmo tipo)
 
 }
