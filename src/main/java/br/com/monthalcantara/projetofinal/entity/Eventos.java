@@ -1,11 +1,11 @@
 package br.com.monthalcantara.projetofinal.entity;
 
+import br.com.monthalcantara.projetofinal.enums.Level;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public class Eventos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Level;//(error, warning, info) Criar Enums
+    private Level Level;
     private String descricaoDoEvento;
     private String logDoEvento;
 
