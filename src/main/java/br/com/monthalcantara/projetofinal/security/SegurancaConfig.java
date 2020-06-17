@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableWebSecurity
 @EnableAuthorizationServer
 @EnableResourceServer
-public class SegurancaConfiguration extends WebSecurityConfigurerAdapter {
+public class SegurancaConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
