@@ -24,7 +24,7 @@ public class Evento implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Level Level;
+    private Level level;
 
     private String descricao;
 

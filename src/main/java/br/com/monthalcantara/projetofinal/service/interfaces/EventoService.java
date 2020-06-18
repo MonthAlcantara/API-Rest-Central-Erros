@@ -15,11 +15,11 @@ public interface EventoService {
 
     Optional<Evento> findById(Long id);
 
-    Evento save(Evento Evento);
+    Evento save(Evento evento);
 
     void deleteById(Long id);
 
-    List<Evento> findByNome(String nome, Pageable pageable);
+    List<Evento> findByOrigem(String origem, Pageable pageable);
 
     List<Evento> findByLevel(Level level);
 
