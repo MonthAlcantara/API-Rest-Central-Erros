@@ -1,4 +1,4 @@
 package br.com.monthalcantara.projetofinal.service.interfaces;
 
-public interface EventosService {
+public interface EventoService {
 }

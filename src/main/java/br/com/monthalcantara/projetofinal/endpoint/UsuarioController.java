@@ -1,4 +1,4 @@
 package br.com.monthalcantara.projetofinal.endpoint;
 
-public class EventosController {
+public class UsuarioController {
 }
