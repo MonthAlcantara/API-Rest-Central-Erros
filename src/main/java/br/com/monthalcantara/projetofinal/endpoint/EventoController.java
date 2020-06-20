@@ -3,7 +3,6 @@ package br.com.monthalcantara.projetofinal.endpoint;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
-import com.sun.xml.internal.ws.handler.HandlerException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -39,7 +38,7 @@ public class EventoController {
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"), @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<Evento> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(this.eventoService.findById(id)
-                .orElseThrow(() -> new HandlerException("Evento")), HttpStatus.OK);
+                .orElseThrow(() -> new RuntimeException("Evento")), HttpStatus.OK);
     }
 
 
