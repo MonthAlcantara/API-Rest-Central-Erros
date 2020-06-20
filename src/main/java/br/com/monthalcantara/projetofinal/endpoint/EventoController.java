@@ -50,7 +50,7 @@ public class EventoController {
 
     @GetMapping("/byLevel/{level}")
     public List<Evento> findByLevel(@PathVariable("level") Level level) {
-        return null; //this.eventoService.findByLevel(level);
+        return this.eventoService.findByLevel(level);
     }
 
     @PostMapping

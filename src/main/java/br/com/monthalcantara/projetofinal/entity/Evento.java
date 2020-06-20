@@ -43,7 +43,7 @@ public class Evento implements Serializable {
     private String origem;
 
     @Column(name = "event_date", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat
     @CreatedDate
     private LocalDateTime data;
 
