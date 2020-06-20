@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -17,25 +19,35 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "event_logs")
 public class Evento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Level level;
 
+    @Column(name = "description")
+    @Size(max = 100)
     private String descricao;
 
+    @NotNull
     private String log;
 
-    private String origem; //(Sistema ou Serviço que originou o evento) Criar enums
+    @Column(name = "origin")
+    @Size(max = 100)
+    @NotNull
+    private String origem;
 
-    @CreatedDate
+    @Column(name = "event_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime data;//(Data do evento)
+    @CreatedDate
+    private LocalDateTime data;
 
-    private Integer quantidade; //(Quantidade de Eventos de mesmo tipo)
+    @Column(name = "quantity")
+    private Integer quantidade;
 
 }
