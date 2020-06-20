@@ -1,3 +1,3 @@
-INSERT INTO usuario
+INSERT INTO users
 VALUES
 (1, 'montival', '123');
