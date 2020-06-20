@@ -39,6 +39,9 @@ public class UsuarioController {
 
     @PostMapping
     @ApiOperation("Cria um novo Usuário")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Não foi possível criar o Usuario"),
+            @ApiResponse(code = 200, message = "Usuario criado"),
+            @ApiResponse(code = 201, message = "Usuario criado com sucesso")})
     public ResponseEntity<Usuario> create(@Valid @RequestBody Usuario usuario) {
         return new ResponseEntity<>(this.userService.save(usuario), HttpStatus.CREATED);
     }
