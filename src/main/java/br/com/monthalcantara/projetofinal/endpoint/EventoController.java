@@ -26,6 +26,7 @@ public class EventoController {
     private EventoService eventoService;
 
     @GetMapping
+    @ApiOperation("Busca todos Eventos")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Eventos não localizados"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
     public Iterable<Evento> findAll(@PathParam("origem") String origem, Pageable pageable) {
