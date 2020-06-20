@@ -26,7 +26,8 @@ public class EventoController {
     private EventoService eventoService;
 
     @GetMapping
-    @ApiOperation("Lista todos os Eventos")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Eventos não localizados"),
+            @ApiResponse(code = 200, message = "Eventos localizados")})
     public Iterable<Evento> findAll(@PathParam("origem") String origem, Pageable pageable) {
         if (origem != null) {
             return this.eventoService.findByOrigem(origem, pageable);
@@ -36,7 +37,8 @@ public class EventoController {
 
     @GetMapping("/{id}")
     @ApiOperation("Busca um Evento pelo ID")
-    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"), @ApiResponse(code = 200, message = "Evento localizado")})
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<Evento> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(this.eventoService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento")), HttpStatus.OK);
@@ -45,6 +47,8 @@ public class EventoController {
 
     @GetMapping("/byDescricao/{descricao}")
     @ApiOperation("Busca um Evento pela Descrição")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 200, message = "Evento localizado")})
     public List<Evento> findByDescricao(@PathVariable("descricao") String descricao) {
         return this.eventoService.findByDescricao(descricao);
     }
@@ -64,6 +68,9 @@ public class EventoController {
 
     @PutMapping
     @ApiOperation("Atualiza um Evento")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 200, message = "Evento localizado"),
+            @ApiResponse(code = 201, message = "Evento atualizado com sucesso")})
     public ResponseEntity<Evento> update(@Valid @RequestBody Evento evento) {
         return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.ACCEPTED);
     }
@@ -71,6 +78,9 @@ public class EventoController {
 
     @DeleteMapping("/{id}")
     @ApiOperation("Exclui um Evento")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 200, message = "Evento localizado"),
+            @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
     public void delete(@PathVariable("id") Long id) {
         this.eventoService.deleteById(id);
     }
