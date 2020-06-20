@@ -35,6 +35,7 @@ public class EventoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Busca um Evento pelo ID")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"), @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<Evento> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(this.eventoService.findById(id)
@@ -43,11 +44,13 @@ public class EventoController {
 
 
     @GetMapping("/byDescricao/{descricao}")
+    @ApiOperation("Busca um Evento pela Descrição")
     public List<Evento> findByDescricao(@PathVariable("descricao") String descricao) {
         return this.eventoService.findByDescricao(descricao);
     }
 
     @GetMapping("/byLevel/{level}")
+    @ApiOperation("Busca um Evento pelo Level")
     public List<Evento> findByLevel(@PathVariable("level") Level level) {
         return this.eventoService.findByLevel(level);
     }
@@ -60,12 +63,14 @@ public class EventoController {
     }
 
     @PutMapping
+    @ApiOperation("Atualiza um Evento")
     public ResponseEntity<Evento> update(@Valid @RequestBody Evento evento) {
         return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.ACCEPTED);
     }
 
 
     @DeleteMapping("/{id}")
+    @ApiOperation("Exclui um Evento")
     public void delete(@PathVariable("id") Long id) {
         this.eventoService.deleteById(id);
     }
