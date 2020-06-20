@@ -45,7 +45,6 @@ public class EventoController {
                 .orElseThrow(() -> new RuntimeException("Evento")), HttpStatus.OK);
     }
 
-
     @GetMapping("/byDescricao/{descricao}")
     @ApiOperation("Busca um Evento pela Descrição")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
@@ -67,6 +66,15 @@ public class EventoController {
         return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation("Exclui um Evento")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 200, message = "Evento localizado"),
+            @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
+    public void deleteById(@PathVariable("id") Long id) {
+        this.eventoService.deleteById(id);
+    }
+
     @PutMapping
     @ApiOperation("Atualiza um Evento")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
@@ -75,16 +83,5 @@ public class EventoController {
     public ResponseEntity<Evento> update(@Valid @RequestBody Evento evento) {
         return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.ACCEPTED);
     }
-
-
-    @DeleteMapping("/{id}")
-    @ApiOperation("Exclui um Evento")
-    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
-            @ApiResponse(code = 200, message = "Evento localizado"),
-            @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
-    public void delete(@PathVariable("id") Long id) {
-        this.eventoService.deleteById(id);
-    }
-
 
 }
