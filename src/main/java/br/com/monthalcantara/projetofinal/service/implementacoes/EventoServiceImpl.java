@@ -22,9 +22,7 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<Evento> findByDescricao(String descricao) {
-        return this.findByDescricao(descricao);
-    }
+    public List<Evento> findByDescricao(String descricao) { return this.findByDescricao(descricao); }
 
     @Override
     public Optional<Evento> findById(Long id) {
@@ -32,22 +30,14 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public Evento save(Evento evento) {
-        return this.eventoRepository.save(evento);
-    }
+    public Evento save(Evento evento) { return this.eventoRepository.save(evento); }
 
     @Override
-    public void deleteById(Long id) {
-        this.eventoRepository.deleteById(id);
-    }
+    public void deleteById(Long id) { this.eventoRepository.deleteById(id); }
 
     @Override
-    public List<Evento> findByOrigem(String origem, Pageable pageable) {
-        return this.eventoRepository.findByOrigem(origem);
-    }
+    public List<Evento> findByOrigem(String origem, Pageable pageable) { return this.eventoRepository.findByOrigem(origem);}
 
     @Override
-    public List<Evento> findByLevel(Level level) {
-        return this.eventoRepository.findByLevel(level);
-    }
+    public List<Evento> findByLevel(Level level) { return this.eventoRepository.findByLevel(level); }
 }
