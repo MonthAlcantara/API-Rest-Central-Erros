@@ -29,4 +29,12 @@ public class EventoDTO {
         return evento;
     }
 
+    public EventoDTO(Evento evento){
+        this.level = evento.getLevel();
+        this.descricao = evento.getDescricao();
+        this.data = evento.getData();
+        this.origem = evento.getOrigem();
+        this.quantidade = evento.getQuantidade();
+    }
+
 }
