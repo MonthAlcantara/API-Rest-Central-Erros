@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "event_logs")
@@ -49,5 +51,6 @@ public class Evento implements Serializable {
 
     @Column(name = "quantity")
     private Integer quantidade;
+
 
 }

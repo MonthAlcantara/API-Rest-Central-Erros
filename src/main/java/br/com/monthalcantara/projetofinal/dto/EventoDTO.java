@@ -1,4 +1,32 @@
 package br.com.monthalcantara.projetofinal.dto;
 
+import br.com.monthalcantara.projetofinal.entity.Evento;
+import br.com.monthalcantara.projetofinal.enums.Level;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EventoDTO {
+
+    private Level level;
+    private String descricao;
+    private String origem;
+    private LocalDateTime data;
+    private Integer quantidade;
+
+    public Evento build() {
+        Evento evento = new Evento()
+                .setLevel(this.level)
+                .setDescricao(this.descricao)
+                .setData(this.data)
+                .setOrigem(this.origem)
+                .setQuantidade(this.quantidade);
+        return evento;
+    }
+
 }
