@@ -20,13 +20,12 @@ public class EventoDTO {
     private Integer quantidade;
 
     public Evento build() {
-        Evento evento = new Evento()
+        return new Evento()
                 .setLevel(this.level)
                 .setDescricao(this.descricao)
                 .setData(this.data)
                 .setOrigem(this.origem)
                 .setQuantidade(this.quantidade);
-        return evento;
     }
 
     public EventoDTO(Evento evento){
