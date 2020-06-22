@@ -16,4 +16,5 @@ public interface UsuarioService {
 
     List<Usuario> findAll();
 
+    Usuario updateUsuario(Long id,Usuario user);
 }

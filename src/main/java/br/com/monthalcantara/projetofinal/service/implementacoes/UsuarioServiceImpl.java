@@ -50,4 +50,20 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
         return this.usuarioRepository.findAll();
     }
 
+
+    public Usuario updateUsuario(Long id, Usuario user) {
+        Optional<Usuario> userInfo = this.usuarioRepository.findById(id);
+
+        if (userInfo.isPresent()) {
+
+            userInfo.get().setPassword(user.getPassword());
+            userInfo.get().setLogin(user.getLogin());
+
+            return this.usuarioRepository.save(userInfo.get());
+
+        }
+        return null;
+
+    }
+
 }
