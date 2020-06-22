@@ -1,5 +1,6 @@
 package br.com.monthalcantara.projetofinal.endpoint;
 
+import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
@@ -29,7 +30,7 @@ public class EventoController {
     @ApiOperation("Busca todos Eventos")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Eventos não localizados"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
-    public Iterable<Evento> findAll(@PathParam("origem") String origem, Pageable pageable) {
+    public Iterable<EventoDTO> findAll(@PathParam("origem") String origem, Pageable pageable) {
         if (origem != null) {
             return this.eventoService.findByOrigem(origem, pageable);
         }
@@ -40,22 +41,25 @@ public class EventoController {
     @ApiOperation("Busca um Evento pelo ID")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity<Evento> findById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(this.eventoService.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evento")), HttpStatus.OK);
+    public ResponseEntity<EventoDTO> findById(@PathVariable("id") Long id) {
+        EventoDTO eventoDTO = this.eventoService.findById(id);
+        if (eventoDTO == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/byDescricao/{descricao}")
+    @GetMapping("/descricao/{descricao}")
     @ApiOperation("Busca um Evento pela Descrição")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public List<Evento> findByDescricao(@PathVariable("descricao") String descricao) {
+    public List<EventoDTO> findByDescricao(@PathVariable("descricao") String descricao) {
         return this.eventoService.findByDescricao(descricao);
     }
 
-    @GetMapping("/byLevel/{level}")
+    @GetMapping("/level/{level}")
     @ApiOperation("Busca um Evento pelo Level")
-    public List<Evento> findByLevel(@PathVariable("level") Level level) {
+    public List<EventoDTO> findByLevel(@PathVariable("level") Level level) {
         return this.eventoService.findByLevel(level);
     }
 
@@ -73,15 +77,6 @@ public class EventoController {
             @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
     public void deleteById(@PathVariable("id") Long id) {
         this.eventoService.deleteById(id);
-    }
-
-    @PutMapping
-    @ApiOperation("Atualiza um Evento")
-    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
-            @ApiResponse(code = 200, message = "Evento localizado"),
-            @ApiResponse(code = 201, message = "Evento atualizado com sucesso")})
-    public ResponseEntity<Evento> update(@Valid @RequestBody Evento evento) {
-        return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.ACCEPTED);
     }
 
 }

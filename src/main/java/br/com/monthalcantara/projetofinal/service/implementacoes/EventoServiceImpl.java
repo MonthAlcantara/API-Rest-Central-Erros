@@ -1,5 +1,6 @@
 package br.com.monthalcantara.projetofinal.service.implementacoes;
 
+import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.repositories.EventoRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,27 +19,68 @@ public class EventoServiceImpl implements EventoService {
     EventoRepository eventoRepository;
 
     @Override
-    public List<Evento> findAll(Pageable pageable) {
-        return this.eventoRepository.findAll();
+    public List<EventoDTO> findAll(Pageable pageable) {
+        List<Evento> listaEvento = this.eventoRepository.findAll();
+        List<EventoDTO> listaEventoDTO = new ArrayList<>();
+
+        for (Evento evento : listaEvento) {
+            listaEventoDTO.add(new EventoDTO(evento));
+        }
+        return listaEventoDTO;
     }
 
     @Override
-    public List<Evento> findByDescricao(String descricao) { return this.findByDescricao(descricao); }
+    public List<EventoDTO> findByDescricao(String descricao) {
+        List<Evento> listaEvento = this.eventoRepository.findByDescricao(descricao);
+        List<EventoDTO> listaEventoDTO = new ArrayList<>();
 
-    @Override
-    public Optional<Evento> findById(Long id) {
-        return this.eventoRepository.findById(id);
+        for (Evento evento : listaEvento) {
+            listaEventoDTO.add(new EventoDTO(evento));
+        }
+        return listaEventoDTO;
+
     }
 
     @Override
-    public Evento save(Evento evento) { return this.eventoRepository.save(evento); }
+    public EventoDTO findById(Long id) {
+        Optional<Evento> evento = this.eventoRepository.findById(id);
+        if (evento.isPresent()) {
+            EventoDTO eventoDTO = new EventoDTO(evento.get());
+            return eventoDTO;
+        }
+        return null;
+
+    }
 
     @Override
-    public void deleteById(Long id) { this.eventoRepository.deleteById(id); }
+    public Evento save(Evento evento) {
+        return this.eventoRepository.save(evento);
+    }
 
     @Override
-    public List<Evento> findByOrigem(String origem, Pageable pageable) { return this.eventoRepository.findByOrigem(origem);}
+    public void deleteById(Long id) {
+        this.eventoRepository.deleteById(id);
+    }
 
     @Override
-    public List<Evento> findByLevel(Level level) { return this.eventoRepository.findByLevel(level); }
+    public List<EventoDTO> findByOrigem(String origem, Pageable pageable) {
+        List<Evento> listaEvento = this.eventoRepository.findByOrigem(origem);
+        List<EventoDTO> listaEventoDTO = new ArrayList<>();
+
+        for (Evento evento : listaEvento) {
+            listaEventoDTO.add(new EventoDTO(evento));
+        }
+        return listaEventoDTO;
+    }
+
+    @Override
+    public List<EventoDTO> findByLevel(Level level) {
+        List<Evento> listaEvento = this.eventoRepository.findByLevel(level);
+        List<EventoDTO> listaEventoDTO = new ArrayList<>();
+
+        for (Evento evento : listaEvento) {
+            listaEventoDTO.add(new EventoDTO(evento));
+        }
+        return listaEventoDTO;
+    }
 }

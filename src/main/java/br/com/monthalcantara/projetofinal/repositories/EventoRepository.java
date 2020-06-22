@@ -10,4 +10,8 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     List<Evento> findByLevel(Level level);
 
     List<Evento> findByOrigem(String origem);
+
+    List<Evento> findByDescricao(String descricao);
+
+
 }
