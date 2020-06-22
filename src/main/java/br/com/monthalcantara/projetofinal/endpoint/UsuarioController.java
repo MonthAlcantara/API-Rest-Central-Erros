@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,9 +25,6 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     UsuarioService userService;
-
-    @Autowired
-    UserDetailsService userdetails;
 
     @Autowired
     private RestTemplate restTemplate;
