@@ -30,11 +30,11 @@ public class EventoController {
     @ApiOperation("Busca todos Eventos")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Eventos não localizados"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
-    public Iterable<EventoDTO> findAll(@PathParam("origem") String origem, Pageable pageable) {
+    public ResponseEntity<Iterable<EventoDTO>> findAll(@PathParam("origem") String origem, Pageable pageable) {
         if (origem != null) {
-            return this.eventoService.findByOrigem(origem, pageable);
+            return new ResponseEntity<>(this.eventoService.findByOrigem(origem, pageable), HttpStatus.NOT_FOUND);
         }
-        return this.eventoService.findAll(pageable);
+        return new ResponseEntity<>(this.eventoService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -53,14 +53,14 @@ public class EventoController {
     @ApiOperation("Busca um Evento pela Descrição")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public List<EventoDTO> findByDescricao(@PathVariable("descricao") String descricao) {
-        return this.eventoService.findByDescricao(descricao);
+    public ResponseEntity<List<EventoDTO>> findByDescricao(@PathVariable("descricao") String descricao) {
+        return new ResponseEntity<>(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
     }
 
     @GetMapping("/level/{level}")
     @ApiOperation("Busca um Evento pelo Level")
-    public List<EventoDTO> findByLevel(@PathVariable("level") Level level) {
-        return this.eventoService.findByLevel(level);
+    public ResponseEntity<List<EventoDTO>> findByLevel(@PathVariable("level") Level level) {
+        return new ResponseEntity<>(this.eventoService.findByLevel(level), HttpStatus.OK);
     }
 
     @PostMapping
