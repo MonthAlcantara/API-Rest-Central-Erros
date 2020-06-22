@@ -15,4 +15,5 @@ public interface UsuarioService {
     void deleteById(Long id);
 
     List<Usuario> findAll();
+
 }
