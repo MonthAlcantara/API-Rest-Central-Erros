@@ -25,16 +25,21 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return this.usuarioRepository.findByLogin(login);
+        //return this.usuarioRepository.findByLogin(login);
+        Usuario user = usuarioRepository.findByLogin(login);
+        if (user == null) {
+            throw new UsernameNotFoundException(login);
+        }
+        return user;
     }
 
+
     @Override
-    public UsuarioDTO findById(Long id){
-    Optional<Usuario> usuario = this.usuarioRepository.findById(id);
+    public UsuarioDTO findById(Long id) {
+        Optional<Usuario> usuario = this.usuarioRepository.findById(id);
         if (usuario.isPresent()) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.get());
-        return usuarioDTO;
-    }
+            return new UsuarioDTO(usuario.get());
+        }
         return null;
     }
 
@@ -76,7 +81,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
             return this.usuarioRepository.save(userInfo.get());
 
         }
-        return null;
+        return save(user);
 
     }
 
