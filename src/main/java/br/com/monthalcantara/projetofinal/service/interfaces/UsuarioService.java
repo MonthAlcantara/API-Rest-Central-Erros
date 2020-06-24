@@ -18,4 +18,6 @@ public interface UsuarioService {
     List<UsuarioDTO> findAll(Pageable pageable);
 
     Usuario updateUsuario(Long id,Usuario user);
+
+    Usuario getUserInfoByUsuarioLogin(String login);
 }

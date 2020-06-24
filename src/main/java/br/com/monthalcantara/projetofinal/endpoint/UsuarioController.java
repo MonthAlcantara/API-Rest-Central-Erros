@@ -38,9 +38,9 @@ public class UsuarioController {
     @ApiOperation(value = "gerar Token")
     @GetMapping("/gerarToken")
     public ResponseEntity<String> gerarToken(@RequestParam String login, @RequestParam String password) throws NotFoundException {
-        Optional<UsuarioDTO> user = Optional.of(userService.findByLogin(login));
+        Optional<Usuario> user = Optional.ofNullable(userService.getUserInfoByUsuarioLogin(login));
         if (user.isPresent()) {
-            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/oauth/token",
+            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/oauth/authorize",
                     "{\n" +
                             "	\"login\":\"" + login + "\",\n" +
                             "	\"password\":\"" + password + "\"\n" +
@@ -81,7 +81,7 @@ public class UsuarioController {
     }
 
 
-    @PostMapping
+    @PostMapping("/save")
     @ApiOperation("Cria um novo Usuário")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Não foi possível criar o Usuario"),
             @ApiResponse(code = 200, message = "Usuario criado"),

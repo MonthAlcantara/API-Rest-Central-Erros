@@ -42,6 +42,10 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
         }
         return null;
     }
+    @Override
+    public Usuario getUserInfoByUsuarioLogin(String login) {
+        return usuarioRepository.findByLogin(login);
+    }
 
     @Override
     public UsuarioDTO findByLogin(String login) {
