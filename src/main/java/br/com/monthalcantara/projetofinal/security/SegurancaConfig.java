@@ -36,6 +36,7 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
+                "/usuarios/gerarToken",
                 "/webjars/**"
         );
     }

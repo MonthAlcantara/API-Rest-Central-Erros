@@ -6,15 +6,19 @@ import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,30 +27,27 @@ public class UsuarioController {
     @Autowired
     UsuarioService userService;
 
+    @Autowired
+    RestTemplate restTemplate;
 
-    // RestTemplate restTemplate;
-/*
-    @ApiResponses(	value = {
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Token criado com sucesso", response = String.class),
             @ApiResponse(code = 204, message = "Login Invalid ! Usuario nao encontrado ", response = Error.class),
-            @ApiResponse(code = 500, message = "Password Invalido!", response = Error.class)	})
+            @ApiResponse(code = 500, message = "Password Invalido!", response = Error.class)})
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value="gerar Token")
+    @ApiOperation(value = "gerar Token")
     @GetMapping("/gerarToken")
-    public ResponseEntity<String> gerarToken(@RequestParam String login, @RequestParam String  password) throws NotFoundException {
-
-        Optional<Usuario> user = userService.findByLogin(login);
-        if(user.isPresent()) {
-            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/login",
+    public ResponseEntity<String> gerarToken(@RequestParam String login, @RequestParam String password) throws NotFoundException {
+        Optional<UsuarioDTO> user = Optional.of(userService.findByLogin(login));
+        if (user.isPresent()) {
+            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/oauth/token",
                     "{\n" +
                             "	\"login\":\"" + login + "\",\n" +
                             "	\"password\":\"" + password + "\"\n" +
                             "}", String.class), HttpStatus.OK);
-
-        }
-        else  throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Usuario não encontrado");
+        } else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Usuario não encontrado");
     }
-*/
+
     @GetMapping
     @ApiOperation("Busca todos os Usuários")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuarios não localizados"),
