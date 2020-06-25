@@ -42,7 +42,7 @@ public class UsuarioController {
         if (user.isPresent()) {
             return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/oauth/authorize",
                     "{\n" +
-                            "	\"login\":\"" + login + "\",\n" +
+                            "	\"username\":\"" + login + "\",\n" +
                             "	\"password\":\"" + password + "\"\n" +
                             "}", String.class), HttpStatus.OK);
         } else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Usuario não encontrado");
@@ -55,6 +55,8 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDTO>> findAll(Pageable pageable) {
         return new ResponseEntity<>(this.userService.findAll(pageable), HttpStatus.OK);
     }
+
+
 
     @GetMapping("/{id}")
     @ApiOperation("Busca um usuário pelo Id")

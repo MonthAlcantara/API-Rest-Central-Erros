@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioDTO{
 
+    @NotBlank(message = "Obrigatorio informar o login")
     private String login;
+    @NotBlank(message = "Obrigatorio informar a senha")
     private String password;
 
     public Usuario build(){
