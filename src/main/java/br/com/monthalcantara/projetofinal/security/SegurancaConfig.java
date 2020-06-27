@@ -1,34 +1,51 @@
 package br.com.monthalcantara.projetofinal.security;
 
+import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static br.com.monthalcantara.projetofinal.security.SecurityConstants.SIGN_UP_URL;
 
 @EnableWebSecurity
-@EnableAuthorizationServer
-@EnableResourceServer
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SegurancaConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private UserDetailsService userService;
+    private UsuarioService userService;
 
-    @Bean
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests().antMatchers("/*//**").hasRole("USER")
+//                .antMatchers("/*/admin/**").hasRole("ADMIN")
+//                .and()
+//                .httpBasic()
+//                .and()
+//                .csrf().disable();
+//    }
+
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
+                .antMatchers("/*/protected/**").hasRole("USER")
+                .antMatchers("/*/admin/**").hasRole("ADMIN")
+                .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(),  userService));
+
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -39,37 +56,10 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
-                "/usuarios/save",
-                "/usuarios/gerarToken",
+                "/v1/usuarios/save",
+                "/v1/usuarios/gerarToken",
                 "/webjars/**"
         );
     }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userService).passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        // TODO Auto-generated method stub
-        http.authorizeRequests()
-                .antMatchers("/v2/api-docs",
-                        "/swagger-resources/configuration/ui",
-                        "/swagger-resources",
-                        "/swagger-resources/configuration/security",
-                        "/swagger-ui.html",
-                        "/webjars/**")
-                .permitAll()
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable();
-    }
 }
+

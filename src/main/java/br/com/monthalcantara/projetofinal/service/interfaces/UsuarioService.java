@@ -3,10 +3,12 @@ package br.com.monthalcantara.projetofinal.service.interfaces;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.entity.Usuario;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UsuarioService {
+public interface UsuarioService extends UserDetailsService {
+
     UsuarioDTO findById(Long id);
 
     UsuarioDTO findByLogin(String login);

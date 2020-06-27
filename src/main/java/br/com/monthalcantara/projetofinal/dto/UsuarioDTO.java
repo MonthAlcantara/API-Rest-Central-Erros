@@ -17,14 +17,18 @@ public class UsuarioDTO{
     @NotBlank(message = "Obrigatorio informar a senha")
     private String password;
 
+    private boolean admin;
+
     public Usuario build(){
         return new Usuario()
                 .setLogin(this.login)
-                .setPassword(this.password);
+                .setPassword(this.password)
+                .setAdmin(this.admin);
     }
 
     public UsuarioDTO(Usuario usuario){
         this.login = usuario.getLogin();
         this.password = usuario.getPassword();
+        this.admin = usuario.isAdmin();
     }
 }

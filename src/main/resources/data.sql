@@ -1,3 +1,3 @@
-INSERT INTO users
+INSERT INTO users (login, password, admin)
 VALUES
-(1, 'montival', '123');
+('montival', '$2a$10$wAeaHjnVVtKlGtwMUb5JdeQHV18yXdWr04Qi.dHkrHcIYxznuTpfi', 'true');

@@ -6,10 +6,13 @@ import br.com.monthalcantara.projetofinal.repositories.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,17 +23,18 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+ //   @Autowired
+   // private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        //return this.usuarioRepository.findByLogin(login);
-        Usuario user = usuarioRepository.findByLogin(login);
-        if (user == null) {
-            throw new UsernameNotFoundException(login);
-        }
-        return user;
+
+       Usuario usuario = Optional.ofNullable(usuarioRepository.findByLogin(login))
+                .orElseThrow(()-> new UsernameNotFoundException("Usuario não encontrado"));
+        List<GrantedAuthority> authoritiesAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
+        List<GrantedAuthority> authoritiesUser = AuthorityUtils.createAuthorityList("ROLE_USER");
+        return new User(usuario.getUsername(), usuario.getPassword(), usuario.isAdmin() ? authoritiesAdmin : authoritiesUser);
     }
 
 
@@ -55,6 +59,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public Usuario save(Usuario novoUsuario) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+       novoUsuario.setPassword(bCryptPasswordEncoder.encode(novoUsuario.getPassword()));
         return this.usuarioRepository.save(novoUsuario);
     }
 
@@ -65,7 +71,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public List<UsuarioDTO> findAll(Pageable pageable) {
-        List<Usuario> listaUsuario = this.usuarioRepository.findAll();
+        List<Usuario> listaUsuario = (List<Usuario>) this.usuarioRepository.findAll();
         List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
 
         for (Usuario usuario : listaUsuario) {

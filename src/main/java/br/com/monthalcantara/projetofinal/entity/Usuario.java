@@ -31,6 +31,9 @@ public class Usuario implements UserDetails {
     @NotBlank
     private String password;
 
+
+    private boolean admin;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));

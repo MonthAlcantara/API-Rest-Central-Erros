@@ -6,7 +6,6 @@ import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/usuarios")
+@RequestMapping("/v1/usuarios")
 public class UsuarioController {
     @Autowired
     UsuarioService userService;
@@ -37,18 +36,18 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "gerar Token")
     @GetMapping("/gerarToken")
-    public ResponseEntity<String> gerarToken(@RequestParam String login, @RequestParam String password) throws NotFoundException {
+    public ResponseEntity<String> gerarToken(@RequestParam String login, @RequestParam String password) {
         Optional<Usuario> user = Optional.ofNullable(userService.getUserInfoByUsuarioLogin(login));
         if (user.isPresent()) {
-            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/oauth/authorize",
+            return new ResponseEntity<>(restTemplate.postForObject("http://localhost:8080/login",
                     "{\n" +
-                            "	\"username\":\"" + login + "\",\n" +
+                            "	\"login\":\"" + login + "\",\n" +
                             "	\"password\":\"" + password + "\"\n" +
                             "}", String.class), HttpStatus.OK);
         } else throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Usuario não encontrado");
     }
 
-    @GetMapping
+    @GetMapping("/protected")
     @ApiOperation("Busca todos os Usuários")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuarios não localizados"),
             @ApiResponse(code = 200, message = "Usuarios localizados")})
@@ -58,7 +57,7 @@ public class UsuarioController {
 
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/protected/{id}")
     @ApiOperation("Busca um usuário pelo Id")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuario não localizado"),
             @ApiResponse(code = 200, message = "Usuario localizado")})
@@ -70,7 +69,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
     }
 
-    @GetMapping("login/{login}")
+    @GetMapping("protected/login/{login}")
     @ApiOperation("Busca um usuário pelo Login")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuario não localizado"),
             @ApiResponse(code = 200, message = "Usuario localizado")})
@@ -92,7 +91,7 @@ public class UsuarioController {
         return new ResponseEntity<>(new UsuarioDTO(this.userService.save(usuarioDTO.build())), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     @ApiOperation("Exclui um Usuário")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuario não localizado"),
             @ApiResponse(code = 200, message = "Usuario localizado"),
@@ -102,7 +101,7 @@ public class UsuarioController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     @ApiOperation("Atualiza um Usuário")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuario não localizado"),
             @ApiResponse(code = 200, message = "Usuario localizado"),
