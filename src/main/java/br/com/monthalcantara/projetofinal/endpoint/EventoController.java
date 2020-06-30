@@ -29,6 +29,8 @@ public class EventoController {
     @GetMapping("/protected")
     @ApiOperation("Busca todos Eventos")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Eventos não localizados"),
+            @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
     public ResponseEntity<Iterable<EventoDTO>> findAll(@PathParam("origem") String origem, Pageable pageable) {
         if (origem != null) {
@@ -40,6 +42,8 @@ public class EventoController {
     @GetMapping("/protected/{id}")
     @ApiOperation("Busca um Evento pelo ID")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<EventoDTO> findById(@PathVariable("id") Long id) {
         EventoDTO eventoDTO = this.eventoService.findById(id);
@@ -52,6 +56,8 @@ public class EventoController {
     @GetMapping("/protected/descricao/{descricao}")
     @ApiOperation("Busca um Evento pela Descrição")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<List<EventoDTO>> findByDescricao(@PathVariable("descricao") String descricao) {
         return new ResponseEntity<>(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
@@ -59,13 +65,19 @@ public class EventoController {
 
     @GetMapping("/protected/level/{level}")
     @ApiOperation("Busca um Evento pelo Level")
+    @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
+            @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<List<EventoDTO>> findByLevel(@PathVariable("level") Level level) {
         return new ResponseEntity<>(this.eventoService.findByLevel(level), HttpStatus.OK);
     }
 
     @PostMapping()
     @ApiOperation("Cria um novo Evento")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "Evento criado com sucesso")})
+    @ApiResponses(value = {@ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
+            @ApiResponse(code = 201, message = "Evento criado com sucesso")})
     public ResponseEntity<Evento> create(@Valid @RequestBody Evento evento) {
         return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.CREATED);
     }
@@ -73,6 +85,8 @@ public class EventoController {
     @DeleteMapping("/admin/{id}")
     @ApiOperation("Exclui um Evento")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Evento não localizado"),
+            @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
+            @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado"),
             @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
     public void deleteById(@PathVariable("id") Long id) {

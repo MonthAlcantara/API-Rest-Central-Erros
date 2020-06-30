@@ -3,7 +3,7 @@ package br.com.monthalcantara.projetofinal.service.implementacoes;
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
-import br.com.monthalcantara.projetofinal.repositories.EventoRepository;
+import br.com.monthalcantara.projetofinal.repository.EventoRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -45,8 +45,7 @@ public class EventoServiceImpl implements EventoService {
     public EventoDTO findById(Long id) {
         Optional<Evento> evento = this.eventoRepository.findById(id);
         if (evento.isPresent()) {
-            EventoDTO eventoDTO = new EventoDTO(evento.get());
-            return eventoDTO;
+            return new EventoDTO(evento.get());
         }
         return null;
 

@@ -2,7 +2,7 @@ package br.com.monthalcantara.projetofinal.service.implementacoes;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.entity.Usuario;
-import br.com.monthalcantara.projetofinal.repositories.UsuarioRepository;
+import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -41,10 +41,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     @Override
     public UsuarioDTO findById(Long id) {
         Optional<Usuario> usuario = this.usuarioRepository.findById(id);
-        if (usuario.isPresent()) {
-            return new UsuarioDTO(usuario.get());
-        }
-        return null;
+        return usuario.map(UsuarioDTO::new).orElse(null);
     }
     @Override
     public Usuario getUserInfoByUsuarioLogin(String login) {
