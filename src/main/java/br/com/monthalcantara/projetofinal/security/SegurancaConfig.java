@@ -39,7 +39,7 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*/admin/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(),  userService));
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), userService));
 
     }
 
@@ -57,7 +57,6 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/v1/usuarios/save",
-                "/v1/usuarios/gerarToken",
                 "/webjars/**"
         );
     }

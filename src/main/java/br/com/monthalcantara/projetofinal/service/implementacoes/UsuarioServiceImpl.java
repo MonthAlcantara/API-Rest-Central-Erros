@@ -2,6 +2,7 @@ package br.com.monthalcantara.projetofinal.service.implementacoes;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.error.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
+
     @Autowired
     UsuarioRepository usuarioRepository;
-
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-       Usuario usuario = Optional.ofNullable(usuarioRepository.findByLogin(login))
-                .orElseThrow(()-> new UsernameNotFoundException("Usuario não encontrado"));
+        Usuario usuario = usuarioRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
         List<GrantedAuthority> authoritiesAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
         List<GrantedAuthority> authoritiesUser = AuthorityUtils.createAuthorityList("ROLE_USER");
         return new User(usuario.getUsername(), usuario.getPassword(), usuario.isAdmin() ? authoritiesAdmin : authoritiesUser);
@@ -39,23 +40,30 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     @Override
     public UsuarioDTO findById(Long id) {
         Optional<Usuario> usuario = this.usuarioRepository.findById(id);
-        return usuario.map(UsuarioDTO::new).orElse(null);
+        return usuario
+                .map(UsuarioDTO::new)
+                .orElseThrow(() -> new RegraNegocioException("Id de Usuário não encontrado"));
     }
+
     @Override
     public Usuario getUserInfoByUsuarioLogin(String login) {
-        return usuarioRepository.findByLogin(login);
+
+        return usuarioRepository.findByLogin(login)
+                .orElseThrow(() -> new RegraNegocioException("Login de Usuário não encontrado"));
     }
 
     @Override
     public UsuarioDTO findByLogin(String login) {
-        return new UsuarioDTO(this.usuarioRepository.findByLogin(login));
+        return new UsuarioDTO(this.usuarioRepository
+                .findByLogin(login)
+                .orElseThrow(() -> new RegraNegocioException("Login de Usuário não encontrado")));
 
     }
 
     @Override
     public Usuario save(Usuario novoUsuario) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-       novoUsuario.setPassword(bCryptPasswordEncoder.encode(novoUsuario.getPassword()));
+        novoUsuario.setPassword(bCryptPasswordEncoder.encode(novoUsuario.getPassword()));
         return this.usuarioRepository.save(novoUsuario);
     }
 
@@ -78,15 +86,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     public Usuario updateUsuario(Long id, Usuario user) {
         Optional<Usuario> userInfo = this.usuarioRepository.findById(id);
 
-        if (userInfo.isPresent()) {
-
-            userInfo.get().setPassword(user.getPassword());
-            userInfo.get().setLogin(user.getLogin());
-
-            return this.usuarioRepository.save(userInfo.get());
-
-        }
-        return save(user);
+        return userInfo.map(u -> {
+            u.setPassword(u.getPassword());
+            u.setLogin(u.getLogin());
+            return this.usuarioRepository.save(u);
+        }).orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
 
     }
 

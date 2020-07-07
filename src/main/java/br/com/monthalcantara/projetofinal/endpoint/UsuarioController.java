@@ -43,9 +43,6 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuario localizado")})
     public ResponseEntity<UsuarioDTO> findById(@PathVariable("id") Long id) {
         UsuarioDTO usuarioDTO = this.userService.findById(id);
-        if (usuarioDTO == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
     }
 
@@ -57,9 +54,6 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuario localizado")})
     public ResponseEntity<UsuarioDTO> byLogin(@PathVariable("login") String login) {
         UsuarioDTO usuarioDTO = this.userService.findByLogin(login);
-        if (usuarioDTO == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
     }
 
@@ -95,7 +89,7 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuario localizado"),
             @ApiResponse(code = 201, message = "Usuario atualizado com sucesso")})
     public ResponseEntity<UsuarioDTO> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user) {
-        return new ResponseEntity<>(new UsuarioDTO(this.userService.updateUsuario(id, user)), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new UsuarioDTO(this.userService.updateUsuario(id, user)), HttpStatus.NO_CONTENT);
 
     }
 
