@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableTransactionManagement
-//@EnableJpaAuditing( auditorAwareRef =  "auditorAware" )
 public class PersistenceConfig {
 
     @Bean
