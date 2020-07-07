@@ -5,13 +5,15 @@ import br.com.monthalcantara.projetofinal.enums.Level;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EventoRepository extends PagingAndSortingRepository<Evento, Long> {
-    List<Evento> findByLevel(Level level);
+    Optional<List<Evento>> findByLevel(Level level);
 
-    List<Evento> findByOrigem(String origem);
+    Optional<List<Evento>> findByOrigem(String origem);
 
-    List<Evento> findByDescricao(String descricao);
+    Optional<List<Evento>> findByDescricao(String descricao);
 
+    Optional<Evento> findById(Long id);
 
 }

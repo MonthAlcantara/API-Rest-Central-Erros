@@ -33,9 +33,6 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
     public ResponseEntity<Iterable<EventoDTO>> findAll(@PathParam("origem") String origem, Pageable pageable) {
-        if (origem != null) {
-            return new ResponseEntity<>(this.eventoService.findByOrigem(origem, pageable), HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(this.eventoService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -46,11 +43,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity<EventoDTO> findById(@PathVariable("id") Long id) {
-        EventoDTO eventoDTO = this.eventoService.findById(id);
-        if (eventoDTO == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
+        return new ResponseEntity<>(this.eventoService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/protected/descricao/{descricao}")
