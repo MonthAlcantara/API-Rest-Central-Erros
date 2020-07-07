@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,8 +29,8 @@ public class UsuarioController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuarios localizados")})
-    public ResponseEntity<List<UsuarioDTO>> findAll(Pageable pageable) {
-        return new ResponseEntity<>(this.userService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity findAll(Pageable pageable) {
+        return new ResponseEntity(this.userService.findAll(pageable), HttpStatus.OK);
     }
 
 
@@ -41,9 +40,8 @@ public class UsuarioController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuario localizado")})
-    public ResponseEntity<UsuarioDTO> findById(@PathVariable("id") Long id) {
-        UsuarioDTO usuarioDTO = this.userService.findById(id);
-        return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+    public ResponseEntity findById(@PathVariable("id") Long id) {
+        return new ResponseEntity(this.userService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("protected/login/{login}")
@@ -52,9 +50,8 @@ public class UsuarioController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuario localizado")})
-    public ResponseEntity<UsuarioDTO> byLogin(@PathVariable("login") String login) {
-        UsuarioDTO usuarioDTO = this.userService.findByLogin(login);
-        return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+    public ResponseEntity byLogin(@PathVariable("login") String login) {
+        return new ResponseEntity(this.userService.findByLogin(login), HttpStatus.OK);
     }
 
 
@@ -65,8 +62,8 @@ public class UsuarioController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuario criado"),
             @ApiResponse(code = 201, message = "Usuario criado com sucesso")})
-    public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-        return new ResponseEntity<>(new UsuarioDTO(this.userService.save(usuarioDTO.build())), HttpStatus.CREATED);
+    public ResponseEntity create(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+        return new ResponseEntity(new UsuarioDTO(this.userService.save(usuarioDTO.build())), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/{id}")
@@ -88,8 +85,8 @@ public class UsuarioController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuario localizado"),
             @ApiResponse(code = 201, message = "Usuario atualizado com sucesso")})
-    public ResponseEntity<UsuarioDTO> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user) {
-        return new ResponseEntity<>(new UsuarioDTO(this.userService.updateUsuario(id, user)), HttpStatus.NO_CONTENT);
+    public ResponseEntity update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user) {
+        return new ResponseEntity(new UsuarioDTO(this.userService.updateUsuario(id, user)), HttpStatus.NO_CONTENT);
 
     }
 

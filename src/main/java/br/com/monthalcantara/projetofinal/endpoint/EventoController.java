@@ -1,6 +1,5 @@
 package br.com.monthalcantara.projetofinal.endpoint;
 
-import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,8 +30,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
-    public ResponseEntity<Iterable<EventoDTO>> findAll(@PathParam("origem") String origem, Pageable pageable) {
-        return new ResponseEntity<>(this.eventoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity findAll(@PathParam("origem") String origem, Pageable pageable) {
+        return new ResponseEntity(this.eventoService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/protected/{id}")
@@ -42,8 +40,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity<EventoDTO> findById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(this.eventoService.findById(id), HttpStatus.OK);
+    public ResponseEntity findById(@PathVariable("id") Long id) {
+        return new ResponseEntity(this.eventoService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/protected/descricao/{descricao}")
@@ -52,8 +50,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity<List<EventoDTO>> findByDescricao(@PathVariable("descricao") String descricao) {
-        return new ResponseEntity<>(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
+    public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao) {
+        return new ResponseEntity(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
     }
 
     @GetMapping("/protected/level/{level}")
@@ -62,8 +60,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity<List<EventoDTO>> findByLevel(@PathVariable("level") Level level) {
-        return new ResponseEntity<>(this.eventoService.findByLevel(level), HttpStatus.OK);
+    public ResponseEntity findByLevel(@PathVariable("level") Level level) {
+        return new ResponseEntity(this.eventoService.findByLevel(level), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -71,8 +69,8 @@ public class EventoController {
     @ApiResponses(value = {@ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 201, message = "Evento criado com sucesso")})
-    public ResponseEntity<Evento> create(@Valid @RequestBody Evento evento) {
-        return new ResponseEntity<>(this.eventoService.save(evento), HttpStatus.CREATED);
+    public ResponseEntity create(@Valid @RequestBody Evento evento) {
+        return new ResponseEntity(this.eventoService.save(evento), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/{id}")
