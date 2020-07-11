@@ -12,18 +12,19 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UsuarioDTO{
 
-    @NotBlank(message = "Obrigatorio informar o login")
+    @NotBlank(message = "Obrigatório informar o login")
     private String login;
-    @NotBlank(message = "Obrigatorio informar a senha")
+    @NotBlank(message = "Obrigatório informar a senha")
     private String password;
 
     private boolean admin;
 
     public Usuario build(){
-        return new Usuario()
-                .setLogin(this.login)
-                .setPassword(this.password)
-                .setAdmin(this.admin);
+        return new Usuario().builder()
+                .login(this.login)
+                .password(this.password)
+                .admin(this.admin)
+                .build();
     }
 
     public UsuarioDTO(Usuario usuario){

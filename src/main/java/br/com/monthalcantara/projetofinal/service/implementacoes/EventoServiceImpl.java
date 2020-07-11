@@ -3,7 +3,7 @@ package br.com.monthalcantara.projetofinal.service.implementacoes;
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.entity.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
-import br.com.monthalcantara.projetofinal.error.RegraNegocioException;
+import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.repository.EventoRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;

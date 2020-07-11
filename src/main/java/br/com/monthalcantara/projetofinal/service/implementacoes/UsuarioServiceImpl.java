@@ -2,18 +2,17 @@ package br.com.monthalcantara.projetofinal.service.implementacoes;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.entity.Usuario;
-import br.com.monthalcantara.projetofinal.error.RegraNegocioException;
+import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
+import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
 import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,14 +25,31 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    public UserDetails autenticar(Usuario usuario) {
+        UserDetails userDetails = loadUserByUsername(usuario.getLogin());
+        boolean isEquals = passwordEncoder.matches(usuario.getPassword(), userDetails.getPassword());
+        if (isEquals) {
+            return userDetails;
+        }
+        throw new SenhaInvalidaException();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-
         Usuario usuario = usuarioRepository.findByLogin(login)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
-        List<GrantedAuthority> authoritiesAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
-        List<GrantedAuthority> authoritiesUser = AuthorityUtils.createAuthorityList("ROLE_USER");
-        return new User(usuario.getUsername(), usuario.getPassword(), usuario.isAdmin() ? authoritiesAdmin : authoritiesUser);
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+        String[] roles = usuario.isAdmin() ?
+                new String[]{"USER", "ADMIN"} :
+                new String[]{"USER"};
+
+        return User.builder()
+                .username(usuario.getLogin())
+                .password(usuario.getPassword())
+                .roles(roles)
+                .build();
     }
 
 
@@ -47,7 +63,6 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public Usuario getUserInfoByUsuarioLogin(String login) {
-
         return usuarioRepository.findByLogin(login)
                 .orElseThrow(() -> new RegraNegocioException("Login de Usuário não encontrado"));
     }
@@ -62,8 +77,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public Usuario save(Usuario novoUsuario) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        novoUsuario.setPassword(bCryptPasswordEncoder.encode(novoUsuario.getPassword()));
+        novoUsuario.setPassword(passwordEncoder.encode(novoUsuario.getPassword()));
         return this.usuarioRepository.save(novoUsuario);
     }
 

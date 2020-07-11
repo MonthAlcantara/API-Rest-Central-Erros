@@ -1,5 +1,6 @@
 package br.com.monthalcantara.projetofinal.error;
 
+import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
