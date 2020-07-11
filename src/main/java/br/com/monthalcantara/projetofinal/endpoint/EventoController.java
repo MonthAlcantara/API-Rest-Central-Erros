@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
-    public ResponseEntity findAll(@PathParam("origem") String origem, Pageable pageable) {
+    public ResponseEntity findAll(Pageable pageable) {
         return new ResponseEntity(this.eventoService.findAll(pageable), HttpStatus.OK);
     }
 
