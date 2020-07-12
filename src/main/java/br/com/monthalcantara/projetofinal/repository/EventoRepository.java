@@ -1,6 +1,6 @@
 package br.com.monthalcantara.projetofinal.repository;
 
-import br.com.monthalcantara.projetofinal.entity.Evento;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

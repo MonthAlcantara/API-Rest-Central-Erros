@@ -1,9 +1,9 @@
-package br.com.monthalcantara.projetofinal.endpoint;
+package br.com.monthalcantara.projetofinal.controller;
 
 import br.com.monthalcantara.projetofinal.dto.CredenciaisDTO;
 import br.com.monthalcantara.projetofinal.dto.TokenDTO;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
-import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
 import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;

@@ -1,6 +1,6 @@
 package br.com.monthalcantara.projetofinal.repository;
 
-import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;

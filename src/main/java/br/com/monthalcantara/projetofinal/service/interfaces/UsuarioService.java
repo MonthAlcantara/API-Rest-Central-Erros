@@ -1,7 +1,7 @@
 package br.com.monthalcantara.projetofinal.service.interfaces;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
-import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

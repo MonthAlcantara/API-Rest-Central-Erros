@@ -1,6 +1,6 @@
 package br.com.monthalcantara.projetofinal.dto;
 
-import br.com.monthalcantara.projetofinal.entity.Evento;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import lombok.AllArgsConstructor;
 import lombok.Data;

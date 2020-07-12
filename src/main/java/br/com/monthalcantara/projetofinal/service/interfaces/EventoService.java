@@ -1,7 +1,7 @@
 package br.com.monthalcantara.projetofinal.service.interfaces;
 
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
-import br.com.monthalcantara.projetofinal.entity.Evento;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import org.springframework.data.domain.Pageable;
 

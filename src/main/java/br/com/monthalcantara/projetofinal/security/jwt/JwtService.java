@@ -1,6 +1,6 @@
 package br.com.monthalcantara.projetofinal.security.jwt;
 
-import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package br.com.monthalcantara.projetofinal.entity;
+package br.com.monthalcantara.projetofinal.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

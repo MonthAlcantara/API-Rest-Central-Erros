@@ -1,6 +1,6 @@
-package br.com.monthalcantara.projetofinal.endpoint;
+package br.com.monthalcantara.projetofinal.controller;
 
-import br.com.monthalcantara.projetofinal.entity.Evento;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import io.swagger.annotations.ApiOperation;

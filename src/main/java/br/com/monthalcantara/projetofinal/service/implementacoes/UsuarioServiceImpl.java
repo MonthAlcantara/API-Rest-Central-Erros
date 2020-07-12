@@ -1,7 +1,7 @@
 package br.com.monthalcantara.projetofinal.service.implementacoes;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
-import br.com.monthalcantara.projetofinal.entity.Usuario;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
 import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;

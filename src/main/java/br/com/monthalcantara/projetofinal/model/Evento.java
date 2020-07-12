@@ -1,4 +1,4 @@
-package br.com.monthalcantara.projetofinal.entity;
+package br.com.monthalcantara.projetofinal.model;
 
 import br.com.monthalcantara.projetofinal.enums.Level;
 import com.fasterxml.jackson.annotation.JsonFormat;
