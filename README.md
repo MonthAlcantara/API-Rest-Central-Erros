@@ -1,5 +1,5 @@
 # **AceleraDev Java Central de Erros**
-#####*Projeto final do aceleraDev Java Online Da Codenation*
+### *Projeto final do aceleraDev Java Online Da Codenation*
 *Desenvolvido por Montival Junior*
 
 
@@ -42,3 +42,21 @@ Deve suportar Ordenação por diferentes tipos de atributos
 A consulta de listagem não deve retornar os LOGs dos Eventos
 
 Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse evento em específico
+
+## ✒️ Autor
+
+Montival Junior
+
+* **Sobre mim** -  [Montival Junior](https://monthalcantara.github.io/)
+
+
+## 📄 Licença
+
+Este projeto está sob com a licença pública.
+
+
+
+---
+⌨️ com ❤️ por [Montival Junior](/https://github.com/MonthAlcantara) 😊
+
+
