@@ -44,7 +44,7 @@ public class SwaggerConfig {
 
     private Contact contact() {
         return new Contact("Montival Junior",
-                "monthalcantara.github.io",
+                "http://monthalcantara.github.io",
                 "montival_junior@yahoo.com.br");
     }
 
