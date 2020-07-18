@@ -1,6 +1,38 @@
 # **AceleraDev Java Central de Erros**
 ### *Projeto final do aceleraDev Java Online Da Codenation*
-*Desenvolvido por Montival Junior*
+
+## Documentação da API
+https://codenation-centralerros.herokuapp.com/swagger-ui.html
+
+## 📦 Desenvolvimento
+
+Utilizado Spring Boot seguindo os padrões Rest de Clean code e S.O.L.I.D.. Utilizado Spring Security com JWT para autenticação e autorização e Swagger para Documentação.  
+
+## 🛠️ Construído com
+
+Ferramentas que utilizadas para criar o projeto
+
+* [Intellij](https://www.jetbrains.com/pt-br/idea/) - IDE utilizada
+* [SpringBoot](https://spring.io/projects/spring-boot) - Framework Java
+* [Swagger](https://swagger.io/) - Documentação da API
+* [Heroku](https://dashboard.heroku.com/)
+
+## ✒️ Autor
+
+Montival Junior
+
+* **Sobre mim** -  [Montival Junior](https://monthalcantara.github.io/)
+
+
+## 📄 Licença
+
+Este projeto está sob licença pública.
+
+
+
+---
+⌨️ com ❤️ por [Montival Junior](/https://github.com/MonthAlcantara) 😊
+
 
 
 # **Central de Erros**
