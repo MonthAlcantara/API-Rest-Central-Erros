@@ -17,23 +17,6 @@ Ferramentas que utilizadas para criar o projeto
 * [Swagger](https://swagger.io/) - Documentação da API
 * [Heroku](https://dashboard.heroku.com/)
 
-## ✒️ Autor
-
-Montival Junior
-
-* **Sobre mim** -  [Montival Junior](https://monthalcantara.github.io/)
-
-
-## 📄 Licença
-
-Este projeto está sob licença pública.
-
-
-
----
-⌨️ com ❤️ por [Montival Junior](/https://github.com/MonthAlcantara) 😊
-
-
 
 # **Central de Erros**
 
