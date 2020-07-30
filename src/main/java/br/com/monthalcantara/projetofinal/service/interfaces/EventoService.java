@@ -11,7 +11,7 @@ public interface EventoService {
 
     List<EventoDTO> findAll(Pageable pageable);
 
-    List<EventoDTO> findByDescricao(String descricao);
+    List<EventoDTO> findByDescricao(String descricao, Pageable pageable);
 
     EventoDTO findById(Long id);
 

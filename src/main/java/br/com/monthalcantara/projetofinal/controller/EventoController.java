@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +50,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao) {
-        return new ResponseEntity(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
+    public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao, @PageableDefault(size = 5) Pageable pageable) {
+        return new ResponseEntity(this.eventoService.findByDescricao(descricao, pageable ), HttpStatus.OK);
     }
 
     @GetMapping("/protected/level/{level}")
