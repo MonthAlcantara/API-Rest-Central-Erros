@@ -21,6 +21,6 @@ public interface EventoService {
 
     List<EventoDTO> findByOrigem(String origem, Pageable pageable);
 
-    List<EventoDTO> findByLevel(Level level);
+    List<EventoDTO> findByLevel(Level level, Pageable pageable);
 
 }

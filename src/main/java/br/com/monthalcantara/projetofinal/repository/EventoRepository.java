@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventoRepository extends PagingAndSortingRepository<Evento, Long> {
-    Optional<List<Evento>> findByLevel(Level level);
+    Optional<List<Evento>> findByLevel(Level level, Pageable pageable);
 
     Optional<Page<Evento>> findByOrigem(String origem, Pageable pageable);
 
