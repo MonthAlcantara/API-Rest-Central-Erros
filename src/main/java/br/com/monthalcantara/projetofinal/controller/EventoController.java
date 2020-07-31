@@ -50,8 +50,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao) {
-        return new ResponseEntity(this.eventoService.findByDescricao(descricao), HttpStatus.OK);
+    public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao, @PageableDefault(size = 5) Pageable pageable) {
+        return new ResponseEntity(this.eventoService.findByDescricao(descricao, pageable ), HttpStatus.OK);
     }
 
     @GetMapping("/protected/level/{level}")
@@ -60,8 +60,8 @@ public class EventoController {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
-    public ResponseEntity findByLevel(@PathVariable("level") Level level) {
-        return new ResponseEntity(this.eventoService.findByLevel(level), HttpStatus.OK);
+    public ResponseEntity findByLevel(@PathVariable("level") Level level, @PageableDefault(size = 5) Pageable pageable) {
+        return new ResponseEntity(this.eventoService.findByLevel(level, pageable), HttpStatus.OK);
     }
 
     @PostMapping()
