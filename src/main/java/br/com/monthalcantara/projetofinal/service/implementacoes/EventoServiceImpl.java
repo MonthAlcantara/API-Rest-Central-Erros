@@ -32,7 +32,7 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<EventoDTO> findByDescricao(String descricao, Pageable pageable) {
+    public Page<EventoDTO> findByDescricao(String descricao, Pageable pageable) {
         List<EventoDTO> listaEventoDTO = new ArrayList<>();
         List<Evento> listaEvento = this.eventoRepository
                 .findByDescricao(descricao, pageable)
@@ -41,7 +41,7 @@ public class EventoServiceImpl implements EventoService {
         for (Evento evento : listaEvento) {
             listaEventoDTO.add(new EventoDTO(evento));
         }
-        return listaEventoDTO;
+        return new PageImpl<>(listaEventoDTO);
 
     }
 
@@ -65,13 +65,13 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<EventoDTO> findByOrigem(String origem, Pageable pageable) {
+    public Page<EventoDTO> findByOrigem(String origem, Pageable pageable) {
         List<EventoDTO> listaEventoDTO = new ArrayList<>();
         return this.eventoRepository.findByOrigem(origem, pageable).map(evento -> {
             for (Evento event : evento) {
                 listaEventoDTO.add(new EventoDTO(event));
             }
-            return listaEventoDTO;
+            return new PageImpl(listaEventoDTO);
         }).orElseThrow(() -> new RegraNegocioException("Não encontrado eventos com esta origem: " + origem));
 
     }

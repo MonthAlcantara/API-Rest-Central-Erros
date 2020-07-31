@@ -12,7 +12,7 @@ public interface EventoService {
 
     Page<EventoDTO> findAll(Pageable pageable);
 
-    List<EventoDTO> findByDescricao(String descricao, Pageable pageable);
+    Page<EventoDTO> findByDescricao(String descricao, Pageable pageable);
 
     EventoDTO findById(Long id);
 
@@ -20,7 +20,7 @@ public interface EventoService {
 
     void deleteById(Long id);
 
-    List<EventoDTO> findByOrigem(String origem, Pageable pageable);
+    Page<EventoDTO> findByOrigem(String origem, Pageable pageable);
 
     Page<EventoDTO> findByLevel(Level level, Pageable pageable);
 
