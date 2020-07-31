@@ -77,13 +77,14 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<EventoDTO> findByLevel(Level level, Pageable pageable) {
+    public Page<EventoDTO> findByLevel(Level level, Pageable pageable) {
         List<EventoDTO> listaEventoDTO = new ArrayList<>();
+
         return this.eventoRepository.findByLevel(level, pageable).map(eventos -> {
             for (Evento e : eventos) {
                 listaEventoDTO.add(new EventoDTO(e));
             }
-            return listaEventoDTO;
+            return new PageImpl<>(listaEventoDTO);
         }).orElseThrow(() -> new RegraNegocioException("Não encontrado eventos com este level: " + level));
 
     }
