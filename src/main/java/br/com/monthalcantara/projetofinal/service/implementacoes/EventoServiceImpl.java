@@ -7,6 +7,8 @@ import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.repository.EventoRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +21,14 @@ public class EventoServiceImpl implements EventoService {
     EventoRepository eventoRepository;
 
     @Override
-    public List<EventoDTO> findAll(Pageable pageable) {
-        List<Evento> listaEvento = (List<Evento>) this.eventoRepository.findAll(pageable);
+    public Page<EventoDTO> findAll(Pageable pageable) {
+        Page<Evento> listaEvento = this.eventoRepository.findAll(pageable);
         List<EventoDTO> listaEventoDTO = new ArrayList<>();
 
         for (Evento evento : listaEvento) {
             listaEventoDTO.add(new EventoDTO(evento));
         }
-        return listaEventoDTO;
+        return new PageImpl<>(listaEventoDTO);
     }
 
     @Override
