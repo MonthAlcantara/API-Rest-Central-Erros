@@ -1,10 +1,8 @@
 package br.com.monthalcantara.projetofinal;
 
-import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.model.Usuario;
-import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -22,6 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest
 @AutoConfigureMockMvc
 public class UsuarioControllerTest {
+
+    static String USUARIO_API = "/v1/usuarios";
+
     @Autowired
     MockMvc mvc;
 
@@ -34,4 +35,5 @@ public class UsuarioControllerTest {
 
         BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(null);
     }
+
 }
