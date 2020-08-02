@@ -36,7 +36,6 @@ class UsuarioRepositoryTests {
         save = usuarioService.save(usuario);
     }
 
-
     @Test
     @DisplayName("Deve criar um novo usuário")
     public void deveCriarUsuario() {
@@ -48,13 +47,12 @@ class UsuarioRepositoryTests {
     @DisplayName("Deve buscar um usuario pelo ID")
     public void deveBuscarUsuarioPeloId() {
 
-        UsuarioDTO Usersave = usuarioService.findById(usuario.getId());
-        assertThat(Usersave).isNotNull();
+        UsuarioDTO usuarioSalvo = usuarioService.findById(usuario.getId());
+        assertThat(usuarioSalvo).isNotNull();
     }
 
     @Test
     @DisplayName("Deve deletar Usuario pelo id")
-
     public void deveDeletarPeloId() {
 
         usuarioService.deleteById(usuario.getId());
@@ -74,6 +72,14 @@ class UsuarioRepositoryTests {
 
         assertThat(usuario.getId())
                 .isEqualTo(usuarioModificado.getId());
+    }
+
+    @Test
+    @DisplayName("Deve buscar pelo login")
+    public void deveBuscarPeloLogin(){
+
+        assertThat(usuario.getLogin())
+                .isEqualTo(usuarioService.findByLogin(usuario.getLogin()).getLogin());
     }
 
 }
