@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,7 +27,12 @@ class UsuarioRepositoryTests {
     @BeforeEach
     @DisplayName("Carregamento de Contexto para os testes")
     void contextLoads() {
-        usuario = Usuario.builder().login("Teste").password("123").admin(true).id(1L).build();
+        usuario = Usuario.builder()
+                .login("Teste")
+                .password("123")
+                .admin(true)
+                .id(1L)
+                .build();
         save = usuarioService.save(usuario);
     }
 
@@ -39,11 +45,11 @@ class UsuarioRepositoryTests {
     }
 
     @Test
-    @DisplayName("Deve Buscar um usuario pelo ID")
+    @DisplayName("Deve buscar um usuario pelo ID")
     public void deveBuscarUsuarioPeloId() {
 
         UsuarioDTO Usersave = usuarioService.findById(usuario.getId());
-        org.assertj.core.api.Assertions.assertThat(Usersave).isNotNull();
+        assertThat(Usersave).isNotNull();
     }
 
     @Test
@@ -52,8 +58,11 @@ class UsuarioRepositoryTests {
     public void deveDeletarPeloId() {
 
         usuarioService.deleteById(usuario.getId());
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () -> usuarioService.findById(usuario.getId()));
-        assertTrue(runtimeException.getMessage().contains("Id de Usuário não encontrado"));
+        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
+                usuarioService.findById(usuario.getId()));
+
+        assertTrue(runtimeException.getMessage()
+                .contains("Id de Usuário não encontrado"));
 
     }
 
@@ -61,9 +70,10 @@ class UsuarioRepositoryTests {
     @DisplayName("Deve atualizar um Usuario")
     public void deveAtualizarUmUsuario() {
         usuario.setLogin("Usuario Modificado");
-        Usuario usuarioModificado = usuario;
-        usuarioModificado = usuarioService.save(usuarioModificado);
-        org.assertj.core.api.Assertions.assertThat(usuario.getId()).isEqualTo(usuarioModificado.getId());
+        Usuario usuarioModificado = usuarioService.save(usuario);
+
+        assertThat(usuario.getId())
+                .isEqualTo(usuarioModificado.getId());
     }
 
 }
