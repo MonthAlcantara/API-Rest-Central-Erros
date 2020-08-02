@@ -49,7 +49,7 @@ public class EventoServiceImpl implements EventoService {
     public EventoDTO findById(Long id) {
         return this.eventoRepository
                 .findById(id)
-                .map(evento -> new EventoDTO(evento))
+                .map(EventoDTO::new)
                 .orElseThrow(() -> new RegraNegocioException("Não encontrado evento com este Id"));
     }
 
@@ -68,9 +68,7 @@ public class EventoServiceImpl implements EventoService {
     public Page<EventoDTO> findByOrigem(String origem, Pageable pageable) {
         List<EventoDTO> listaEventoDTO = new ArrayList<>();
         return this.eventoRepository.findByOrigem(origem, pageable).map(evento -> {
-            for (Evento event : evento) {
-                listaEventoDTO.add(new EventoDTO(event));
-            }
+            for (Evento event : evento) listaEventoDTO.add(new EventoDTO(event));
             return new PageImpl(listaEventoDTO);
         }).orElseThrow(() -> new RegraNegocioException("Não encontrado eventos com esta origem: " + origem));
 
