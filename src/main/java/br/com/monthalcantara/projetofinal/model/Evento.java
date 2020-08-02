@@ -3,6 +3,7 @@ package br.com.monthalcantara.projetofinal.model;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Builder
 @Table(name = "event_logs")
 public class Evento implements Serializable {
 
