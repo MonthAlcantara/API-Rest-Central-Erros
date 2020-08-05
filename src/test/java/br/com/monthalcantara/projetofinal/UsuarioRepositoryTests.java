@@ -4,12 +4,11 @@ import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,16 +35,26 @@ class UsuarioRepositoryTests {
     }
 
     @Test
-    @DisplayName("Deve deletar Usuario pelo id")
-    void deveDeletarPeloId() {
+    @DisplayName("Deve carregar usuário pelo username")
+    void deveCarregarUsuarioPeloUsername(){
+        UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getLogin());
+        assertThat(userDetails.getUsername()).isEqualTo(usuario.getLogin());
+        assertThat(userDetails.getPassword()).isEqualTo(usuario.getPassword());
+    }
 
-        usuarioService.deleteById(usuario.getId());
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
-                usuarioService.findById(usuario.getId()));
+    @Test
+    @DisplayName("Deve lançar erro ao não encontrar Login")
+    void deveLancarErroLoginInvalido(){
+        RuntimeException runtimeException = assertThrows(UsernameNotFoundException.class, () ->
+                usuarioService.loadUserByUsername("login Inválido"));
+        assertThat(runtimeException.getMessage()).contains("Usuário não encontrado");
+    }
 
-        assertTrue(runtimeException.getMessage()
-                .contains("Id de Usuário não encontrado"));
-
+    @Test
+    @DisplayName("Deve autenticar usuario")
+    @Disabled
+    void deveAutenticarUsuario(){
+        assertThat(usuarioService.autenticar(usuario)).isNotNull();
     }
 
     @Test
@@ -63,12 +72,24 @@ class UsuarioRepositoryTests {
         assertThat(usuarioEncontrado).isNotNull();
     }
 
+    @Test
+    @DisplayName("Deve deletar Usuario pelo id")
+    void deveDeletarPeloId() {
+
+        usuarioService.deleteById(usuario.getId());
+        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
+                usuarioService.findById(usuario.getId()));
+
+        assertTrue(runtimeException.getMessage()
+                .contains("Id de Usuário não encontrado"));
+
+    }
 
     @Test
     @DisplayName("Deve atualizar um Usuario")
     void deveAtualizarUmUsuario() {
         usuario.setLogin("Usuario Modificado");
-        Usuario usuarioModificado = usuarioService.save(usuario);
+        Usuario usuarioModificado = usuarioService.updateUsuario(usuario.getId(), usuario);
 
         assertThat(usuario.getId())
                 .isEqualTo(usuarioModificado.getId());
