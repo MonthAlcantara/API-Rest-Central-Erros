@@ -49,7 +49,7 @@ public class EventoServiceImpl implements EventoService {
     public EventoDTO findById(Long id) {
         return this.eventoRepository
                 .findById(id)
-                .map(EventoDTO::new)
+                .map(evento -> new EventoDTO(evento))
                 .orElseThrow(() -> new RegraNegocioException("Não encontrado evento com este Id"));
     }
 
