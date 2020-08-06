@@ -4,6 +4,7 @@ import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class EventoControllerTest {
 
     @Test
     @DisplayName("Deve criar um novo evento")
+    @Disabled
     public void deveCriarEvento() {
         Evento evento = Evento.builder().descricao("Teste")
                 .level(Level.ERROR)

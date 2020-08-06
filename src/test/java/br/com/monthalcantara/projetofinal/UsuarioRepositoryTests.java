@@ -5,7 +5,9 @@ import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.platform.runner.JUnitPlatform;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
+@RunWith(JUnitPlatform.class)
 @SpringBootTest
 class UsuarioRepositoryTests {
 
