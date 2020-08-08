@@ -38,6 +38,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     }
 
     @Override
+    public boolean existsByLogin(String login) {
+        return usuarioRepository.existsByLogin(login);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByLogin(login)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
@@ -77,6 +82,9 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public Usuario save(Usuario novoUsuario) {
+        if (existsByLogin(novoUsuario.getLogin())) {
+        throw new RegraNegocioException("Ja existe um usuário com esse login. Por favor escolha outro");
+        }
         novoUsuario.setPassword(passwordEncoder.encode(novoUsuario.getPassword()));
         return this.usuarioRepository.save(novoUsuario);
     }

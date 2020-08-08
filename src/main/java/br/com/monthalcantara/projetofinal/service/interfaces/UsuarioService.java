@@ -25,4 +25,6 @@ public interface UsuarioService extends UserDetailsService {
     Usuario getUserInfoByUsuarioLogin(String login);
 
     UserDetails autenticar(Usuario usuario);
+
+    boolean existsByLogin(String login);
 }
