@@ -9,8 +9,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,7 +17,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(JUnitPlatform.class)
+
 @SpringBootTest
 public class EventoRepositoryTests {
 
@@ -38,12 +36,12 @@ public class EventoRepositoryTests {
                 .quantidade(1)
                 .id(1L)
                 .log("Teste").build();
-        eventoSalvo = eventoService.save(evento);
     }
 
     @Test
     @DisplayName("Deve criar um novo evento")
     void deveCriarEvento() {
+        eventoSalvo = eventoService.save(evento);
 
         Assertions.assertThat(eventoSalvo).isNotNull();
     }
@@ -66,6 +64,7 @@ public class EventoRepositoryTests {
     @Test
     @DisplayName("Deve deletar um evento")
     void deveDeletarUmEvento() {
+        eventoService.save(evento);
         eventoService.deleteById(1l);
         RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
                 eventoService.deleteById(1L));
@@ -76,13 +75,14 @@ public class EventoRepositoryTests {
     @DisplayName("Deve lançar erro ao tentar excluir evento com Id inexistente")
     void DeveLancarErroExcluirIdInexistente() {
         RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
-                eventoService.deleteById(2L));
+                eventoService.deleteById(1L));
         assertTrue(runtimeException.getMessage().contains("Não encontrado evento com este Id"));
     }
 
     @Test
     @DisplayName("Deve atualizar um evento")
     void deveAtualizarEvento() {
+        eventoSalvo = eventoService.save(evento);
         eventoSalvo.setDescricao("Teste2");
         eventoSalvo.setId(2L);
         eventoSalvo.setLevel(Level.INFO);
