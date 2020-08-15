@@ -116,8 +116,10 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuário localizado"),
             @ApiResponse(code = 201, message = "Usuário atualizado com sucesso")})
     public ResponseEntity update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user) {
-        return new ResponseEntity(new UsuarioDTO(this.userService.updateUsuario(id, user)), HttpStatus.NO_CONTENT);
+        Usuario usuario = this.userService.updateUsuario(id, user);
+        return new ResponseEntity(new UsuarioDTO(usuario), HttpStatus.NO_CONTENT);
 
     }
+
 
 }

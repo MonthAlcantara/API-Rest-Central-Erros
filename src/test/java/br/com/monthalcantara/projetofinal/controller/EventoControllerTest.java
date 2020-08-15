@@ -1,4 +1,4 @@
-package br.com.monthalcantara.projetofinal;
+package br.com.monthalcantara.projetofinal.controller;
 
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;

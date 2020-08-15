@@ -2,6 +2,7 @@ package br.com.monthalcantara.projetofinal.dto;
 
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UsuarioDTO{
 
     @NotBlank(message = "Obrigatório informar o login")

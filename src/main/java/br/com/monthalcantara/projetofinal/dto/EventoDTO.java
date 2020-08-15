@@ -1,7 +1,7 @@
 package br.com.monthalcantara.projetofinal.dto;
 
-import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +20,16 @@ public class EventoDTO {
     private Integer quantidade;
 
     public Evento build() {
-        return new Evento()
-                .setLevel(this.level)
-                .setDescricao(this.descricao)
-                .setData(this.data)
-                .setOrigem(this.origem)
-                .setQuantidade(this.quantidade);
+        return Evento.builder()
+                .level(this.level)
+                .descricao(this.descricao)
+                .data(this.data)
+                .origem(this.origem)
+                .quantidade(this.quantidade)
+                .build();
     }
 
-    public EventoDTO(Evento evento){
+    public EventoDTO(Evento evento) {
         this.level = evento.getLevel();
         this.descricao = evento.getDescricao();
         this.data = evento.getData();

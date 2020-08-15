@@ -1,4 +1,4 @@
-package br.com.monthalcantara.projetofinal;
+package br.com.monthalcantara.projetofinal.repository;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;

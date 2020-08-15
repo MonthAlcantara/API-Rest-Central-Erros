@@ -1,4 +1,4 @@
-package br.com.monthalcantara.projetofinal;
+package br.com.monthalcantara.projetofinal.repository;
 
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.enums.Level;
