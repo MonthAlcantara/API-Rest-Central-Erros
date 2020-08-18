@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,7 +47,7 @@ public class UsuarioControllerTest {
     @DisplayName("Deve criar um novo usuario")
     public void deveCriarUsuario() throws Exception {
         UsuarioDTO usuario = geradorDeUsuario();
-        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.build());
+        BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(usuario.build());
 
         String json = new ObjectMapper().writeValueAsString(usuario);
 
@@ -63,6 +65,32 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("password").value("123"));
 
     }
+
+    @Test
+    @DisplayName("Deve atualizar um usuario")
+    public void deveAtualizarUsuario() throws Exception {
+
+        Usuario novoUsuario = geradorDeUsuario().build();
+        novoUsuario.setAdmin(false);
+        String json = new ObjectMapper().writeValueAsString(novoUsuario);
+
+        BDDMockito.given(usuarioService.updateUsuario(anyLong(), any(Usuario.class))).willReturn(novoUsuario);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(USUARIO_API.concat("/admin/1"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("login").value("Teste 01"))
+                .andExpect(jsonPath("password").value("123"))
+                .andExpect(jsonPath("admin").value(false));
+    }
+
+    
 
     private UsuarioDTO geradorDeUsuario(){
         return UsuarioDTO.builder()
