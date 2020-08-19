@@ -1,6 +1,7 @@
 package br.com.monthalcantara.projetofinal.repository;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
+import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
@@ -131,7 +132,7 @@ class UsuarioRepositoryTests {
                 .build();
         usuarioService.save(usuario);
         usuarioService.deleteById(usuario.getId());
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
+        RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
                 usuarioService.findById(usuario.getId()));
 
         assertTrue(runtimeException.getMessage()

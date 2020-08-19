@@ -2,7 +2,7 @@ package br.com.monthalcantara.projetofinal.repository;
 
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
 import br.com.monthalcantara.projetofinal.enums.Level;
-import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
+import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import org.assertj.core.api.Assertions;
@@ -57,7 +57,7 @@ public class EventoRepositoryTests {
     @Test
     @DisplayName("Deve lançar erro ao buscar Id inexistente")
     void deveLancarErroBuscarIdInexistente() {
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () -> eventoService.findById(2L));
+        RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () -> eventoService.findById(2L));
         assertTrue(runtimeException.getMessage().contains("Não encontrado evento com este Id"));
     }
 
@@ -66,7 +66,7 @@ public class EventoRepositoryTests {
     void deveDeletarUmEvento() {
         eventoService.save(evento);
         eventoService.deleteById(1l);
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
+        RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
                 eventoService.deleteById(1L));
         assertTrue(runtimeException.getMessage().contains("Não encontrado evento com este Id"));
     }
@@ -74,7 +74,7 @@ public class EventoRepositoryTests {
     @Test
     @DisplayName("Deve lançar erro ao tentar excluir evento com Id inexistente")
     void DeveLancarErroExcluirIdInexistente() {
-        RuntimeException runtimeException = assertThrows(RegraNegocioException.class, () ->
+        RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
                 eventoService.deleteById(1L));
         assertTrue(runtimeException.getMessage().contains("Não encontrado evento com este Id"));
     }

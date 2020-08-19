@@ -1,6 +1,7 @@
 package br.com.monthalcantara.projetofinal.service.implementacoes;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
+import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
@@ -63,20 +64,14 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
         Optional<Usuario> usuario = this.usuarioRepository.findById(id);
         return usuario
                 .map(UsuarioDTO::new)
-                .orElseThrow(() -> new RegraNegocioException("Id de Usuário não encontrado"));
-    }
-
-    @Override
-    public Usuario getUserInfoByUsuarioLogin(String login) {
-        return usuarioRepository.findByLogin(login)
-                .orElseThrow(() -> new RegraNegocioException("Login de Usuário não encontrado"));
+                .orElseThrow(() -> new RecursoNotFound("Id de Usuário não encontrado"));
     }
 
     @Override
     public UsuarioDTO findByLogin(String login) {
         return new UsuarioDTO(this.usuarioRepository
                 .findByLogin(login)
-                .orElseThrow(() -> new RegraNegocioException("Login de Usuário não encontrado")));
+                .orElseThrow(() -> new RecursoNotFound("Login de Usuário não encontrado")));
 
     }
 
@@ -113,7 +108,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
             u.setPassword(u.getPassword());
             u.setLogin(u.getLogin());
             return this.usuarioRepository.save(u);
-        }).orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
+        }).orElseThrow(() -> new RecursoNotFound("Usuario não encontrado"));
 
     }
 
