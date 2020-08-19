@@ -2,13 +2,13 @@ package br.com.monthalcantara.projetofinal.controller;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.model.Usuario;
+import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
 import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -39,6 +41,9 @@ public class UsuarioControllerTest {
 
     @MockBean
     JwtService jwtService;
+
+    @MockBean
+    UsuarioRepository usuarioRepository;
 
     @MockBean
     UsuarioServiceImpl usuarioService;
@@ -90,9 +95,23 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("admin").value(false));
     }
 
-    
+    @Test
+    @DisplayName("Deve deletar um usuario")
+    public void deveDeletarUsuaio() throws Exception {
 
-    private UsuarioDTO geradorDeUsuario(){
+        BDDMockito.given(usuarioRepository.findById(anyLong()))
+                .willReturn(Optional.of(Usuario.builder().id(11L).build()));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(USUARIO_API.concat("/11"));
+
+        mvc
+                .perform(request)
+                .andExpect(status().isNoContent());
+
+    }
+
+    private UsuarioDTO geradorDeUsuario() {
         return UsuarioDTO.builder()
                 .login("Teste 01")
                 .password("123")

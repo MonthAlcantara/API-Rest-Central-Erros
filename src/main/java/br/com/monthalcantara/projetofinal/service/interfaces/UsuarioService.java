@@ -20,9 +20,7 @@ public interface UsuarioService extends UserDetailsService {
 
     List<UsuarioDTO> findAll(Pageable pageable);
 
-    Usuario updateUsuario(Long id,Usuario user);
-
-    Usuario getUserInfoByUsuarioLogin(String login);
+    Usuario updateUsuario(Long id, Usuario user);
 
     UserDetails autenticar(Usuario usuario);
 

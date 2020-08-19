@@ -91,6 +91,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Override
     public void deleteById(Long id) {
+        findById(id);
         this.usuarioRepository.deleteById(id);
     }
 

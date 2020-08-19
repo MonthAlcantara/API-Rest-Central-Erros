@@ -1,7 +1,7 @@
 package br.com.monthalcantara.projetofinal.controller;
 
-import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,7 +51,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao, @PageableDefault(size = 5) Pageable pageable) {
-        return new ResponseEntity(this.eventoService.findByDescricao(descricao, pageable ), HttpStatus.OK);
+        return new ResponseEntity(this.eventoService.findByDescricao(descricao, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/protected/level/{level}")
@@ -83,5 +83,6 @@ public class EventoController {
     public void deleteById(@PathVariable("id") Long id) {
         this.eventoService.deleteById(id);
     }
+
 
 }

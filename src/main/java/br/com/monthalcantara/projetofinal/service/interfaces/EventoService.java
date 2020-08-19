@@ -1,12 +1,10 @@
 package br.com.monthalcantara.projetofinal.service.interfaces;
 
 import br.com.monthalcantara.projetofinal.dto.EventoDTO;
-import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.enums.Level;
+import br.com.monthalcantara.projetofinal.model.Evento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface EventoService {
 
@@ -19,8 +17,6 @@ public interface EventoService {
     Evento save(Evento evento);
 
     void deleteById(Long id);
-
-    Page<EventoDTO> findByOrigem(String origem, Pageable pageable);
 
     Page<EventoDTO> findByLevel(Level level, Pageable pageable);
 
