@@ -67,7 +67,7 @@ Montival Junior
 
 ## 📄 Licença
 
-Este projeto está sob com a licença pública.
+Este projeto está com a licença pública.
 
 
 
