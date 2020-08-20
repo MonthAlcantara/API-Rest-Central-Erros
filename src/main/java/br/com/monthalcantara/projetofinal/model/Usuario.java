@@ -1,5 +1,6 @@
 package br.com.monthalcantara.projetofinal.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @Entity
 @Table(name = "users")
-public class Usuario{
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +29,4 @@ public class Usuario{
 
     private boolean admin;
 
-    }
+}
