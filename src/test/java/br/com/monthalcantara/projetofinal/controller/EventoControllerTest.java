@@ -1,13 +1,9 @@
 package br.com.monthalcantara.projetofinal.controller;
 
-import br.com.monthalcantara.projetofinal.dto.TokenDTO;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;
-import br.com.monthalcantara.projetofinal.model.Usuario;
-import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
 import br.com.monthalcantara.projetofinal.service.implementacoes.EventoServiceImpl;
-import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -35,20 +30,6 @@ public class EventoControllerTest {
     @MockBean
     EventoServiceImpl eventoService;
 
-    @MockBean
-    UserDetails authenticate;
-
-    @MockBean
-    TokenDTO dto;
-
-    @MockBean
-    private UsuarioServiceImpl userService;
-    @MockBean
-    private JwtService jwtService;
-
-    @MockBean
-    UserDetails userDetails;
-
     @Autowired
     MockMvc mvc;
 
@@ -57,10 +38,8 @@ public class EventoControllerTest {
     public void deveCriarEvento() throws Exception {
         Evento evento = geradorDeEventos();
         UsuarioDTO usuario = geradorDeUsuario();
-        BDDMockito.given(userService.autenticar(Mockito.any(Usuario.class))).willReturn(userDetails);
-
         BDDMockito.given(eventoService.save(Mockito.any(Evento.class))).willReturn(evento);
-        String json = new ObjectMapper().writeValueAsString(evento);
+        String json = geradorDeJson(evento);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(EVENTO_API)
@@ -91,6 +70,10 @@ public class EventoControllerTest {
                 .password("123")
                 .admin(true)
                 .build();
+    }
+
+    private String geradorDeJson(Object o) throws Exception {
+        return new ObjectMapper().writeValueAsString(o);
     }
 
 }

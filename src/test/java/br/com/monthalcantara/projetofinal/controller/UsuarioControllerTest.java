@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,7 +55,7 @@ public class UsuarioControllerTest {
         UsuarioDTO usuario = geradorDeUsuario();
         BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(usuario.build());
 
-        String json = new ObjectMapper().writeValueAsString(usuario);
+        String json = geradorDeJson(usuario);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(USUARIO_API)
@@ -72,12 +73,56 @@ public class UsuarioControllerTest {
     }
 
     @Test
+    @DisplayName("Não deve criar usuario sem login")
+    public void naoDeveCriarUsarioSemLogin() throws Exception {
+        UsuarioDTO usuario = geradorDeUsuario();
+
+
+        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.build());
+        usuario.setLogin(null);
+        String json = geradorDeJson(usuario);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(USUARIO_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc
+                .perform(request)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    @DisplayName("Não deve criar usuario sem senha")
+    public void naoDeveCriarUsarioSemSenha() throws Exception {
+        UsuarioDTO usuario = geradorDeUsuario();
+
+
+        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.build());
+        usuario.setPassword(null);
+        String json = geradorDeJson(usuario);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(USUARIO_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc
+                .perform(request)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
     @DisplayName("Deve atualizar um usuario")
     public void deveAtualizarUsuario() throws Exception {
 
         Usuario novoUsuario = geradorDeUsuario().build();
         novoUsuario.setAdmin(false);
-        String json = new ObjectMapper().writeValueAsString(novoUsuario);
+        String json = geradorDeJson(novoUsuario);
 
         BDDMockito.given(usuarioService.updateUsuario(anyLong(), any(Usuario.class))).willReturn(novoUsuario);
 
@@ -118,5 +163,10 @@ public class UsuarioControllerTest {
                 .admin(true)
                 .build();
     }
+
+    private String geradorDeJson(Object o) throws Exception {
+        return new ObjectMapper().writeValueAsString(o);
+    }
+
 
 }
