@@ -1,0 +1,260 @@
+2020-08-22 07:42:44.683  INFO 5932 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 5932 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 07:42:44.692  INFO 5932 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 07:42:49.182  INFO 5932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 07:42:49.327  INFO 5932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 132ms. Found 2 repository interfaces.
+2020-08-22 07:42:50.621  INFO 5932 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$631e6fec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 07:42:51.345  INFO 5932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 07:42:51.428  INFO 5932 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 07:42:51.429  INFO 5932 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 07:42:51.874  INFO 5932 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 07:42:51.875  INFO 5932 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 6998 ms
+2020-08-22 07:42:54.226  INFO 5932 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 07:42:56.000  INFO 5932 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 07:42:56.591  INFO 5932 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 07:42:57.235  INFO 5932 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 07:42:58.007  INFO 5932 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 07:42:59.006  INFO 5932 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 07:43:01.533  INFO 5932 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 07:43:01.542  INFO 5932 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 07:43:02.866  WARN 5932 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 07:43:03.148  INFO 5932 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2020-08-22 07:43:03.525  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 07:43:03.526  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 07:43:03.527  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 07:43:03.530  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 07:43:03.531  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 07:43:03.532  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 07:43:03.532  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 07:43:03.532  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 07:43:03.629  INFO 5932 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@15e748b5, org.springframework.security.web.context.SecurityContextPersistenceFilter@321c01c2, org.springframework.security.web.header.HeaderWriterFilter@78de0f6f, org.springframework.security.web.authentication.logout.LogoutFilter@60493524, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@7657d29f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@79169472, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@edf4973, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27ada0e8, org.springframework.security.web.session.SessionManagementFilter@5825932c, org.springframework.security.web.access.ExceptionTranslationFilter@117be84a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@419c70f6]
+2020-08-22 07:43:03.681  INFO 5932 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 07:43:04.075  INFO 5932 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 07:43:04.760  INFO 5932 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 07:43:04.802  INFO 5932 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 07:43:04.867  INFO 5932 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 07:43:05.255  INFO 5932 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 07:43:05.266  INFO 5932 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 07:43:05.274  INFO 5932 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 07:43:05.404  INFO 5932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 07:43:05.408  INFO 5932 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 21.828 seconds (JVM running for 22.919)
+2020-08-22 07:43:09.219  INFO 5932 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-08-22 07:43:09.220  INFO 5932 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-08-22 07:43:09.235  INFO 5932 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 15 ms
+2020-08-22 07:56:51.261  INFO 7672 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 7672 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 07:56:51.266  INFO 7672 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 07:56:55.211  INFO 7672 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 07:56:55.349  INFO 7672 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 123ms. Found 2 repository interfaces.
+2020-08-22 07:56:56.373  INFO 7672 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$a132c22f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 07:56:57.099  INFO 7672 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 07:56:57.158  INFO 7672 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 07:56:57.159  INFO 7672 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 07:56:57.471  INFO 7672 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 07:56:57.472  INFO 7672 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 6097 ms
+2020-08-22 07:56:58.810  INFO 7672 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 07:56:59.099  INFO 7672 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 07:56:59.222  INFO 7672 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 07:56:59.396  INFO 7672 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 07:56:59.693  INFO 7672 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 07:57:00.054  INFO 7672 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 07:57:01.442  INFO 7672 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 07:57:01.454  INFO 7672 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 07:57:02.646  WARN 7672 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 07:57:02.935  INFO 7672 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2020-08-22 07:57:03.361  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 07:57:03.362  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 07:57:03.364  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 07:57:03.364  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 07:57:03.365  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 07:57:03.367  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 07:57:03.368  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 07:57:03.368  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 07:57:03.416  INFO 7672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@67201002, org.springframework.security.web.context.SecurityContextPersistenceFilter@3b8c15de, org.springframework.security.web.header.HeaderWriterFilter@3b9c386d, org.springframework.security.web.authentication.logout.LogoutFilter@2279e7c7, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@41c83af0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64ff0eaa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@52a3eba3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6ddc9001, org.springframework.security.web.session.SessionManagementFilter@24ccc91b, org.springframework.security.web.access.ExceptionTranslationFilter@5d2bfc9f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6109366a]
+2020-08-22 07:57:03.472  INFO 7672 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 07:57:03.863  INFO 7672 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 07:57:04.537  INFO 7672 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 07:57:04.570  INFO 7672 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 07:57:04.623  INFO 7672 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 07:57:05.005  INFO 7672 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 07:57:05.014  INFO 7672 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 07:57:05.020  INFO 7672 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 07:57:05.128  INFO 7672 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 07:57:05.133  INFO 7672 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 14.858 seconds (JVM running for 15.909)
+2020-08-22 07:57:19.828  INFO 7672 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-08-22 07:57:19.841  INFO 7672 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-08-22 07:57:19.862  INFO 7672 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 21 ms
+2020-08-22 07:57:52.952  INFO 7672 --- [http-nio-8080-exec-10] b.c.m.p.controller.UsuarioController     : Cadastrando um novo usuario
+2020-08-22 07:58:48.340  INFO 7672 --- [http-nio-8080-exec-9] b.c.m.p.controller.UsuarioController     : Autenticando um usuario
+2020-08-22 07:59:17.512  INFO 7672 --- [http-nio-8080-exec-2] b.c.m.p.controller.EventoController      : Cadastrando um novo evento
+2020-08-22 09:22:44.260  INFO 7964 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 7964 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 09:22:44.276  INFO 7964 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 09:22:49.519  INFO 7964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 09:22:49.813  INFO 7964 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 276ms. Found 2 repository interfaces.
+2020-08-22 09:22:51.058  INFO 7964 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$77eada56] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 09:22:51.939  INFO 7964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 09:22:52.010  INFO 7964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 09:22:52.011  INFO 7964 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 09:22:52.326  INFO 7964 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 09:22:52.327  INFO 7964 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 7551 ms
+2020-08-22 09:22:53.971  INFO 7964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 09:22:54.363  INFO 7964 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 09:22:54.526  INFO 7964 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 09:22:54.756  INFO 7964 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 09:22:55.093  INFO 7964 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 09:22:55.462  INFO 7964 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 09:22:57.010  INFO 7964 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 09:22:57.025  INFO 7964 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 09:22:57.755  INFO 7964 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2020-08-22 09:22:58.410  WARN 7964 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 09:22:58.744  INFO 7964 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 17 endpoint(s) beneath base path '/actuator'
+2020-08-22 09:22:59.208  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 09:22:59.209  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 09:22:59.210  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 09:22:59.213  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 09:22:59.214  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 09:22:59.214  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 09:22:59.214  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 09:22:59.215  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 09:22:59.290  INFO 7964 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@330d557e, org.springframework.security.web.context.SecurityContextPersistenceFilter@5b8ba1d2, org.springframework.security.web.header.HeaderWriterFilter@1ac30be4, org.springframework.security.web.authentication.logout.LogoutFilter@53b579d2, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@7878459f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1eda853f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@627ad446, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@ab595e8, org.springframework.security.web.session.SessionManagementFilter@1e9afe4e, org.springframework.security.web.access.ExceptionTranslationFilter@715523b8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@67748053]
+2020-08-22 09:22:59.349  INFO 7964 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 09:22:59.781  INFO 7964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 09:23:00.553  INFO 7964 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 09:23:00.598  INFO 7964 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 09:23:00.678  INFO 7964 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 09:23:01.060  INFO 7964 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 09:23:01.076  INFO 7964 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 09:23:01.085  INFO 7964 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 09:23:01.217  INFO 7964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 09:23:01.222  INFO 7964 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 18.112 seconds (JVM running for 19.449)
+2020-08-22 09:23:18.718  INFO 7964 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-08-22 09:23:18.718  INFO 7964 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-08-22 09:23:18.738  INFO 7964 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 19 ms
+2020-08-22 09:30:35.379  INFO 2424 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 2424 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 09:30:35.397  INFO 2424 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 09:30:45.202  INFO 2424 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 09:30:45.707  INFO 2424 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 479ms. Found 2 repository interfaces.
+2020-08-22 09:30:48.463  INFO 2424 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$616f9df2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 09:30:50.379  INFO 2424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 09:30:50.477  INFO 2424 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 09:30:50.479  INFO 2424 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 09:30:51.096  INFO 2424 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 09:30:51.097  INFO 2424 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 15416 ms
+2020-08-22 09:30:54.517  INFO 2424 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 09:30:55.094  INFO 2424 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 09:30:55.295  INFO 2424 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 09:30:55.648  INFO 2424 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 09:30:56.806  INFO 2424 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 09:30:57.749  INFO 2424 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 09:31:01.081  INFO 2424 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 09:31:01.097  INFO 2424 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 09:31:02.752  INFO 2424 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2020-08-22 09:31:04.557  WARN 2424 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 09:31:05.128  INFO 2424 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 17 endpoint(s) beneath base path '/actuator'
+2020-08-22 09:31:06.032  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 09:31:06.048  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 09:31:06.055  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 09:31:06.060  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 09:31:06.060  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 09:31:06.060  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 09:31:06.061  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 09:31:06.061  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 09:31:06.216  INFO 2424 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f69e35a, org.springframework.security.web.context.SecurityContextPersistenceFilter@5be8a92c, org.springframework.security.web.header.HeaderWriterFilter@3db3668, org.springframework.security.web.authentication.logout.LogoutFilter@15096b0e, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@229c4d34, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7fae6f43, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7a3ab73a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6c2d124e, org.springframework.security.web.session.SessionManagementFilter@66c91224, org.springframework.security.web.access.ExceptionTranslationFilter@5dd62f07, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@31b6eec8]
+2020-08-22 09:31:06.301  INFO 2424 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 09:31:07.052  INFO 2424 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 09:31:08.521  INFO 2424 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService
+2020-08-22 09:31:10.292  INFO 2424 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 09:31:10.462  INFO 2424 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 09:31:10.766  INFO 2424 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 09:31:11.743  INFO 2424 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 09:31:11.783  INFO 2424 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 09:31:11.856  INFO 2424 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 09:31:12.102  INFO 2424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 09:31:12.194  INFO 2424 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 38.605 seconds (JVM running for 40.362)
+2020-08-22 09:31:13.665  WARN 2424 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=spring-boot-application, managementUrl=http://Montival:8080/actuator, healthUrl=http://Montival:8080/actuator/health, serviceUrl=http://Montival:8080/) at spring-boot-admin ([http://localhost:8081//instances]): I/O error on POST request for "http://localhost:8081/instances": Connection refused: no further information; nested exception is java.net.ConnectException: Connection refused: no further information. Further attempts are logged on DEBUG level
+2020-08-22 09:33:15.900  INFO 3920 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 3920 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 09:33:15.916  INFO 3920 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 09:33:20.597  INFO 3920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 09:33:20.745  INFO 3920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 135ms. Found 2 repository interfaces.
+2020-08-22 09:33:22.240  INFO 3920 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c20e94c9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 09:33:23.213  INFO 3920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 09:33:23.390  INFO 3920 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 09:33:23.392  INFO 3920 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 09:33:23.810  INFO 3920 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 09:33:23.813  INFO 3920 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 7625 ms
+2020-08-22 09:33:25.804  INFO 3920 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 09:33:26.204  INFO 3920 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 09:33:26.330  INFO 3920 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 09:33:26.490  INFO 3920 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 09:33:26.763  INFO 3920 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 09:33:27.174  INFO 3920 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 09:33:28.676  INFO 3920 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 09:33:28.691  INFO 3920 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 09:33:29.334  INFO 3920 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2020-08-22 09:33:30.197  WARN 3920 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 09:33:30.631  INFO 3920 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 17 endpoint(s) beneath base path '/actuator'
+2020-08-22 09:33:31.592  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 09:33:31.593  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 09:33:31.594  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 09:33:31.595  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 09:33:31.595  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 09:33:31.595  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 09:33:31.596  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 09:33:31.596  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 09:33:31.653  INFO 3920 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2314f013, org.springframework.security.web.context.SecurityContextPersistenceFilter@24f8707c, org.springframework.security.web.header.HeaderWriterFilter@7ab8c972, org.springframework.security.web.authentication.logout.LogoutFilter@b97f195, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@11fa11b2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@c7aac7c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ffcb1bd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@72ae1007, org.springframework.security.web.session.SessionManagementFilter@125c03d3, org.springframework.security.web.access.ExceptionTranslationFilter@3bea478e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@44bb6856]
+2020-08-22 09:33:31.704  INFO 3920 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 09:33:32.058  INFO 3920 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 09:33:32.660  INFO 3920 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService
+2020-08-22 09:33:32.995  INFO 3920 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 09:33:33.033  INFO 3920 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 09:33:33.093  INFO 3920 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 09:33:33.482  INFO 3920 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 09:33:33.492  INFO 3920 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 09:33:33.498  INFO 3920 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 09:33:33.618  INFO 3920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 09:33:33.626  INFO 3920 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 18.913 seconds (JVM running for 20.089)
+2020-08-22 09:33:33.803  WARN 3920 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=spring-boot-application, managementUrl=http://Montival:8080/actuator, healthUrl=http://Montival:8080/actuator/health, serviceUrl=http://Montival:8080/) at spring-boot-admin ([http://localhost:8081//instances]): 404 null. Further attempts are logged on DEBUG level
+2020-08-22 09:41:13.932  INFO 7656 --- [main] b.c.m.p.ProjetofinalApplication          : Starting ProjetofinalApplication on Montival with PID 7656 (C:\projetos\API-Rest-Central-Erros\target\classes started by Montival in C:\projetos\API-Rest-Central-Erros)
+2020-08-22 09:41:13.944  INFO 7656 --- [main] b.c.m.p.ProjetofinalApplication          : No active profile set, falling back to default profiles: default
+2020-08-22 09:41:19.856  INFO 7656 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-08-22 09:41:20.047  INFO 7656 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 170ms. Found 2 repository interfaces.
+2020-08-22 09:41:21.246  INFO 7656 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$bb4bc5bf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-08-22 09:41:21.987  INFO 7656 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-08-22 09:41:22.045  INFO 7656 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-08-22 09:41:22.046  INFO 7656 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-08-22 09:41:22.436  INFO 7656 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-08-22 09:41:22.437  INFO 7656 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 8359 ms
+2020-08-22 09:41:24.013  INFO 7656 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-08-22 09:41:24.374  INFO 7656 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-08-22 09:41:24.512  INFO 7656 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-08-22 09:41:24.746  INFO 7656 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-08-22 09:41:25.123  INFO 7656 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-08-22 09:41:25.464  INFO 7656 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-08-22 09:41:27.017  INFO 7656 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-08-22 09:41:27.028  INFO 7656 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-08-22 09:41:27.821  INFO 7656 --- [main] o.s.b.a.e.web.ServletEndpointRegistrar   : Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2020-08-22 09:41:28.589  WARN 7656 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-08-22 09:41:28.860  INFO 7656 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 17 endpoint(s) beneath base path '/actuator'
+2020-08-22 09:41:29.352  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/h2/**'], []
+2020-08-22 09:41:29.353  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-08-22 09:41:29.354  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/actuator/**'], []
+2020-08-22 09:41:29.355  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-08-22 09:41:29.355  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-08-22 09:41:29.356  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-08-22 09:41:29.356  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-08-22 09:41:29.357  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-08-22 09:41:29.426  INFO 7656 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@19c6e821, org.springframework.security.web.context.SecurityContextPersistenceFilter@4bca2a09, org.springframework.security.web.header.HeaderWriterFilter@7e4a6afd, org.springframework.security.web.authentication.logout.LogoutFilter@21b792c2, br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter@727de450, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5620470a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@53630682, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1dfd3635, org.springframework.security.web.session.SessionManagementFilter@7fae6f43, org.springframework.security.web.access.ExceptionTranslationFilter@7e9ea888, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5edce7da]
+2020-08-22 09:41:29.483  INFO 7656 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2020-08-22 09:41:29.861  INFO 7656 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-22 09:41:30.369  INFO 7656 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService
+2020-08-22 09:41:30.693  INFO 7656 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-08-22 09:41:30.744  INFO 7656 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-08-22 09:41:30.820  INFO 7656 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-08-22 09:41:31.237  INFO 7656 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteByIdUsingDELETE_1
+2020-08-22 09:41:31.247  INFO 7656 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllUsingGET_1
+2020-08-22 09:41:31.255  INFO 7656 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findByIdUsingGET_1
+2020-08-22 09:41:31.359  INFO 7656 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-08-22 09:41:31.366  INFO 7656 --- [main] b.c.m.p.ProjetofinalApplication          : Started ProjetofinalApplication in 18.7 seconds (JVM running for 19.934)
+2020-08-22 09:41:32.502  INFO 7656 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Application registered itself as 9286b02c4e4c
+2020-08-22 09:41:36.876  INFO 7656 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-08-22 09:41:36.877  INFO 7656 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-08-22 09:41:36.893  INFO 7656 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 14 ms
+2020-08-22 10:07:32.430  WARN 7656 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=spring-boot-application, managementUrl=http://Montival:8080/actuator, healthUrl=http://Montival:8080/actuator/health, serviceUrl=http://Montival:8080/) at spring-boot-admin ([http://localhost:8081//instances]): I/O error on POST request for "http://localhost:8081/instances": Connection refused: no further information; nested exception is java.net.ConnectException: Connection refused: no further information. Further attempts are logged on DEBUG level
