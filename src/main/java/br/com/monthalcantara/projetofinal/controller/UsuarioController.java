@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/v1/usuarios")
 public class UsuarioController {
 
@@ -40,6 +42,7 @@ public class UsuarioController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuários localizados")})
     public ResponseEntity findAll(Pageable pageable) {
+        log.info("Buscando todos os usuarios cadastrados");
         return new ResponseEntity(this.userService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -51,6 +54,7 @@ public class UsuarioController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuário localizado")})
     public ResponseEntity findById(@PathVariable("id") Long id) {
+        log.info("Buscando usuario cadastrados pelo id: {} ", id);
         return new ResponseEntity(this.userService.findById(id), HttpStatus.OK);
     }
 
@@ -61,6 +65,7 @@ public class UsuarioController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuário localizado")})
     public ResponseEntity byLogin(@PathVariable("login") String login) {
+        log.info("Buscando usuario cadastrados pelo login: {} ", login);
         return new ResponseEntity(this.userService.findByLogin(login), HttpStatus.OK);
     }
 
@@ -73,6 +78,7 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuário criado"),
             @ApiResponse(code = 201, message = "Usuário criado com sucesso")})
     public ResponseEntity save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+        log.info("Cadastrando um novo usuario");
         return new ResponseEntity(new UsuarioDTO(this.userService.save(usuarioDTO.build())), HttpStatus.CREATED);
     }
 
@@ -82,6 +88,7 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Token gerado"),
             @ApiResponse(code = 201, message = "Token gerado com sucesso")})
     public TokenDTO authenticate(@RequestBody CredenciaisDTO userLogin) {
+        log.info("Autenticando um usuario");
         try {
             Usuario user = Usuario.builder()
                     .login(userLogin.getLogin())
@@ -104,6 +111,7 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuário localizado"),
             @ApiResponse(code = 201, message = "Usuário excluído com sucesso")})
     public void deleteById(@PathVariable("id") Long id) {
+        log.info("Excluindo um usuario cadastrado pelo id: {} ", id);
         this.userService.deleteById(id);
     }
 
@@ -116,6 +124,7 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuário localizado"),
             @ApiResponse(code = 201, message = "Usuário atualizado com sucesso")})
     public ResponseEntity update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user) {
+        log.info("Atualizando um usuario cadastrado pelo id: {} ", id);
         Usuario usuario = this.userService.updateUsuario(id, user);
         return new ResponseEntity(new UsuarioDTO(usuario), HttpStatus.NO_CONTENT);
 

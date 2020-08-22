@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/v1/eventos")
 public class EventoController {
 
@@ -31,6 +33,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Eventos localizados")})
     public ResponseEntity findAll(@PageableDefault(size = 5) Pageable pageable) {
+        log.info("Buscando por todos os eventos cadastrados");
         return new ResponseEntity(this.eventoService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -51,6 +54,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity findByDescricao(@PathVariable("descricao") String descricao, @PageableDefault(size = 5) Pageable pageable) {
+        log.info("Buscando eventos cadastrados pela descrição: {} ", descricao);
         return new ResponseEntity(this.eventoService.findByDescricao(descricao, pageable), HttpStatus.OK);
     }
 
@@ -61,6 +65,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Evento localizado")})
     public ResponseEntity findByLevel(@PathVariable("level") Level level, @PageableDefault(size = 5) Pageable pageable) {
+        log.info("Buscando eventos cadastrados pela level: {} ", level);
         return new ResponseEntity(this.eventoService.findByLevel(level, pageable), HttpStatus.OK);
     }
 
@@ -70,6 +75,7 @@ public class EventoController {
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 201, message = "Evento criado com sucesso")})
     public ResponseEntity create(@Valid @RequestBody Evento evento) {
+        log.info("Cadastrando um novo evento");
         return new ResponseEntity(this.eventoService.save(evento), HttpStatus.CREATED);
     }
 
@@ -81,6 +87,7 @@ public class EventoController {
             @ApiResponse(code = 200, message = "Evento localizado"),
             @ApiResponse(code = 201, message = "Evento deletado com sucesso")})
     public void deleteById(@PathVariable("id") Long id) {
+        log.info("Excluindo um evento cadastrado");
         this.eventoService.deleteById(id);
     }
 
