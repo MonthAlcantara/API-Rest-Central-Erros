@@ -2,11 +2,10 @@ package br.com.monthalcantara.projetofinal.service.interfaces;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.model.Usuario;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
-import java.util.List;
 
 public interface UsuarioService extends UserDetailsService {
 
@@ -18,7 +17,7 @@ public interface UsuarioService extends UserDetailsService {
 
     void deleteById(Long id);
 
-    List<UsuarioDTO> findAll(Pageable pageable);
+    Page<UsuarioDTO> findAll(Pageable pageable);
 
     Usuario updateUsuario(Long id, Usuario user);
 

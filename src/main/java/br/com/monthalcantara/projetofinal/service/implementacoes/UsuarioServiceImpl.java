@@ -8,6 +8,8 @@ import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
 import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -91,14 +93,14 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
     }
 
     @Override
-    public List<UsuarioDTO> findAll(Pageable pageable) {
-        List<Usuario> listaUsuario = (List<Usuario>) this.usuarioRepository.findAll();
+    public Page<UsuarioDTO> findAll(Pageable pageable) {
+        Page<Usuario> listaUsuario = this.usuarioRepository.findAll(pageable);
         List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
 
         for (Usuario usuario : listaUsuario) {
             listaUsuarioDTO.add(new UsuarioDTO(usuario));
         }
-        return listaUsuarioDTO;
+        return new PageImpl<>(listaUsuarioDTO);
     }
 
     public Usuario updateUsuario(Long id, Usuario user) {
