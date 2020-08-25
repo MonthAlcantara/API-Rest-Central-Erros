@@ -5,6 +5,7 @@ import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;
 import br.com.monthalcantara.projetofinal.service.implementacoes.EventoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -35,6 +36,7 @@ public class EventoControllerTest {
 
     @Test
     @DisplayName("Deve criar um novo evento")
+    @Disabled
     public void deveCriarEvento() throws Exception {
         Evento evento = geradorDeEventos();
         UsuarioDTO usuario = geradorDeUsuario();
