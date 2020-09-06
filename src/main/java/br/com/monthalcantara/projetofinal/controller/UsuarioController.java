@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -35,6 +36,11 @@ public class UsuarioController {
     @Autowired
     private JwtService jwtService;
 
+
+    @GetMapping("/")
+    String uid(HttpSession session) {
+        return session.getId();
+    }
 
     @GetMapping("/protected")
     @ApiOperation("Busca todos os Usuários")
