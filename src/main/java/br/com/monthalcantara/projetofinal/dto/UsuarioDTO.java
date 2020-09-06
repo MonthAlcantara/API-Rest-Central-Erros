@@ -7,12 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UsuarioDTO{
+public class UsuarioDTO implements Serializable {
 
     @NotBlank(message = "Obrigatório informar o login")
     private String login;
