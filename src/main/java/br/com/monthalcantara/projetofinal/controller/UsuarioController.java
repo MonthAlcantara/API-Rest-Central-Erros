@@ -3,8 +3,8 @@ package br.com.monthalcantara.projetofinal.controller;
 import br.com.monthalcantara.projetofinal.dto.CredenciaisDTO;
 import br.com.monthalcantara.projetofinal.dto.TokenDTO;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
-import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +36,6 @@ public class UsuarioController {
     @Autowired
     private JwtService jwtService;
 
-
-    @GetMapping("/")
-    String uid(HttpSession session) {
-        return session.getId();
-    }
 
     @GetMapping("/protected")
     @ApiOperation("Busca todos os Usuários")
@@ -97,7 +92,7 @@ public class UsuarioController {
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuário não localizado"),
             @ApiResponse(code = 200, message = "Token gerado"),
             @ApiResponse(code = 201, message = "Token gerado com sucesso")})
-    public TokenDTO authenticate(@RequestBody CredenciaisDTO userLogin) {
+    public TokenDTO authenticate(@RequestBody CredenciaisDTO userLogin, HttpSession session) {
         log.info("Autenticando um usuario");
         try {
             Usuario user = Usuario.builder()
