@@ -1,4 +1,4 @@
-# **AceleraDev Java Central de Erros** [![Build Status](https://travis-ci.com/MonthAlcantara/API-Rest-Central-Erros.svg?branch=master)](https://travis-ci.com/MonthAlcantara/API-Rest-Central-Erros)
+# **AceleraDev Java Central de Erros** 
 ### *Projeto final do aceleraDev Java Online Da Codenation*
 
 ## Documentação da API
