@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,18 +73,21 @@ public class UsuarioController {
 
     @PostMapping
     @ApiOperation("Cria um novo Usuário")
+    @Cacheable("usuarios")
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Não foi possível criar o Usuário"),
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 200, message = "Usuário criado"),
             @ApiResponse(code = 201, message = "Usuário criado com sucesso")})
-    public ResponseEntity save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+    public UsuarioDTO save(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         log.info("Cadastrando um novo usuario");
-        return new ResponseEntity(new UsuarioDTO(this.userService.save(usuarioDTO.build())), HttpStatus.CREATED);
+        return new UsuarioDTO(this.userService.save(usuarioDTO.build()));
     }
 
     @PostMapping("/auth")
     @ApiOperation("Gera um Token de Acesso")
+    @Cacheable("usuarios")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuário não localizado"),
             @ApiResponse(code = 200, message = "Token gerado"),
             @ApiResponse(code = 201, message = "Token gerado com sucesso")})
