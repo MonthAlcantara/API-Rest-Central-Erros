@@ -15,7 +15,6 @@ Ferramentas que utilizadas para criar o projeto
 * [Intellij](https://www.jetbrains.com/pt-br/idea/) - IDE utilizada
 * [SpringBoot](https://spring.io/projects/spring-boot) - Framework Java
 * [Swagger](https://swagger.io/) - Documentação da API
-* [Heroku](https://dashboard.heroku.com/)
 
 
 # **Central de Erros**
