@@ -74,7 +74,6 @@ public class UsuarioController {
 
     @PostMapping
     @ApiOperation("Cria um novo Usuário")
-    @Cacheable("usuarios")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Não foi possível criar o Usuário"),
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
@@ -88,7 +87,6 @@ public class UsuarioController {
 
     @PostMapping("/auth")
     @ApiOperation("Gera um Token de Acesso")
-    @Cacheable("usuarios")
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuário não localizado"),
             @ApiResponse(code = 200, message = "Token gerado"),
             @ApiResponse(code = 201, message = "Token gerado com sucesso")})
