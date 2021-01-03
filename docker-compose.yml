@@ -8,6 +8,6 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - C:\'Program Files'\MySQL\centralerros_data:/var/lib/mysql
+      - centralerros_data:/var/lib/mysql
 volumes:
   centralerros_data:
