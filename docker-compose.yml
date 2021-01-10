@@ -9,5 +9,6 @@ services:
       - "3306:3306"
     volumes:
       - centralerros_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
 volumes:
   centralerros_data:
