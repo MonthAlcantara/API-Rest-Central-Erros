@@ -5,42 +5,60 @@ import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
+import br.com.monthalcantara.projetofinal.util.UsuarioFactory;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
+@ExtendWith({SpringExtension.class})
 public class UsuarioServiceTest {
-    Usuario usuario, usuarioSalvo;
+   private Usuario usuario, usuarioSalvo;
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
-    @MockBean
-    Pageable pageable;
+    private Pageable pageable = PageRequest.of(1,1);
+
+    @BeforeEach
+    public void init(){
+        usuario = UsuarioFactory.geraAdminNaoSalvo();
+        usuarioService.save(usuario);
+    }
 
     @Test
     @DisplayName("Deve carregar usuário pelo username")
     void deveCarregarUsuarioPeloUsername() {
-        usuario = Usuario.builder()
-                .login("Teste 01")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-
-        usuarioService.save(usuario);
+//        usuario = Usuario.builder()
+//                .login("Teste 01")
+//                .password("123")
+//                .admin(true)
+//                .id(1L)
+//                .build();
+//
+//        usuarioService.save(usuario);
 
         UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getLogin());
         assertThat(userDetails.getUsername()).isEqualTo(usuario.getLogin());
