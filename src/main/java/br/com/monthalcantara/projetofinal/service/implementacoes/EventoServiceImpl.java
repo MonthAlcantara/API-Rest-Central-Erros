@@ -19,8 +19,13 @@ import java.util.List;
 
 @Service
 public class EventoServiceImpl implements EventoService {
+
+    private EventoRepository eventoRepository;
+
     @Autowired
-    EventoRepository eventoRepository;
+    public EventoServiceImpl(EventoRepository eventoRepository) {
+        this.eventoRepository = eventoRepository;
+    }
 
     @Override
     public Page<EventoDTO> findAll(Pageable pageable) {

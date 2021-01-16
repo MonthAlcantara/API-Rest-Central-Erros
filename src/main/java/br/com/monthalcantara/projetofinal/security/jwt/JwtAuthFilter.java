@@ -1,6 +1,8 @@
 package br.com.monthalcantara.projetofinal.security.jwt;
 
+import br.com.monthalcantara.projetofinal.service.implementacoes.UserDetailsServiceImpl;
 import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Profile({"prod","test"})
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private JwtService jwtService;
-    private UsuarioServiceImpl userService;
+    private UserDetailsServiceImpl userService;
 
-    public JwtAuthFilter(JwtService jwtService, UsuarioServiceImpl userService) {
+    public JwtAuthFilter(JwtService jwtService, UserDetailsServiceImpl userService) {
         this.jwtService = jwtService;
         this.userService = userService;
     }

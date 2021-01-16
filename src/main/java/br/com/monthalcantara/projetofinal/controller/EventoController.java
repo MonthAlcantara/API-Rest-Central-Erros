@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/v1/eventos")
 public class EventoController {
 
-    @Autowired
+
     private EventoService eventoService;
+
+    public EventoController(EventoService eventoService) {
+        this.eventoService = eventoService;
+    }
 
     @GetMapping("/protected")
     @ApiOperation("Busca todos Eventos")

@@ -5,14 +5,18 @@ import br.com.monthalcantara.projetofinal.dto.TokenDTO;
 import br.com.monthalcantara.projetofinal.exception.SenhaInvalidaException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
+import br.com.monthalcantara.projetofinal.service.implementacoes.UserDetailsServiceImpl;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,17 +26,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 
+@Profile({"prod","test"})
 @RestController
-@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/v1/usuarios")
 public class AutenticacaoController {
 
 
-    private UsuarioService userService;
+
+    private UserDetailsServiceImpl userService;
     private JwtService jwtService;
 
-    public AutenticacaoController(UsuarioService userService, JwtService jwtService) {
+    public AutenticacaoController(UserDetailsServiceImpl userService, JwtService jwtService) {
         this.userService = userService;
         this.jwtService = jwtService;
     }

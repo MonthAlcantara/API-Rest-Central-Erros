@@ -22,7 +22,7 @@ public class UsuarioDTO implements Serializable {
 
     private boolean admin;
 
-    public Usuario build(){
+    public Usuario toModel() {
         return new Usuario().builder()
                 .login(this.login)
                 .password(this.password)
@@ -30,7 +30,7 @@ public class UsuarioDTO implements Serializable {
                 .build();
     }
 
-    public UsuarioDTO(Usuario usuario){
+    public UsuarioDTO(Usuario usuario) {
         this.login = usuario.getLogin();
         this.password = usuario.getPassword();
         this.admin = usuario.isAdmin();

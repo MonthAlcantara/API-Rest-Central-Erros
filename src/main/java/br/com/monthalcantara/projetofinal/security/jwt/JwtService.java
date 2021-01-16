@@ -6,6 +6,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,6 +15,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Service
+@Profile({"prod","test"})
 public class JwtService {
     @Value("${security.jwt.expiration}")
     private String expiration;

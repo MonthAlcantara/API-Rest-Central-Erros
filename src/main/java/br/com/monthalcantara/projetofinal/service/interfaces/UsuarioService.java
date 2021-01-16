@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UsuarioService extends UserDetailsService {
+public interface UsuarioService {
 
     UsuarioDTO findById(Long id);
 
@@ -20,8 +20,6 @@ public interface UsuarioService extends UserDetailsService {
     Page<UsuarioDTO> findAll(Pageable pageable);
 
     Usuario updateUsuario(Long id, Usuario user);
-
-    UserDetails autenticar(Usuario usuario);
 
     boolean existsByLogin(String login);
 }

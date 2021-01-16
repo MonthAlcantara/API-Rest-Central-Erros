@@ -2,9 +2,11 @@ package br.com.monthalcantara.projetofinal.configuration;
 
 import br.com.monthalcantara.projetofinal.security.jwt.JwtAuthFilter;
 import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
+import br.com.monthalcantara.projetofinal.service.implementacoes.UserDetailsServiceImpl;
 import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,15 +14,17 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
+@Profile({"prod","test"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UsuarioServiceImpl userService;
+    private UserDetailsServiceImpl userService;
 
     @Autowired
     private JwtService jwtService;
@@ -43,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2/**",
+        web
+                .ignoring()
+                .antMatchers("/h2/**",
                 "/v1/usuarios/",
                 "/v2/api-docs",
                 "/actuator/**",
@@ -67,10 +73,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/v1/usuarios/**")
                 .permitAll()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
 }
