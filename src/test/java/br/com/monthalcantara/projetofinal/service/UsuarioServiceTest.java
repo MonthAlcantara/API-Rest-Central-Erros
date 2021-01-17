@@ -36,12 +36,10 @@ public class UsuarioServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    private Pageable pageable;
 
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
-        pageable = PageRequest.of(1, 1);
         usuarioService = new UsuarioServiceImpl(usuarioRepository, passwordEncoder);
 
         usuario = new Usuario();
@@ -116,8 +114,8 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.save(usuarioSalvo)).thenReturn(usuario);
         usuarioService.updateUsuario(usuarioSalvo.getId(), usuario);
 
-        assertThat(usuarioSalvo.getLogin()).isNotEqualTo(usuario.getLogin());
-        assertThat(usuarioSalvo.getPassword()).isNotEqualTo(usuario.getPassword());
+        assertThat(usuarioSalvo.getLogin()).isEqualTo(usuario.getLogin());
+        assertThat(usuarioSalvo.getPassword()).isEqualTo(usuario.getPassword());
         assertThat(usuarioSalvo.isAdmin()).isNotEqualTo(usuario.isAdmin());
     }
 
