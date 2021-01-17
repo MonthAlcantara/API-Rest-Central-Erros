@@ -12,33 +12,33 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 public class EventoServiceTest {
-    Evento evento, eventoSalvo;
 
-    @Autowired
-    EventoService eventoService;
-    @MockBean
-    EventoRepository eventoRepository;
+    @Mock
+    private EventoRepository eventoRepository;
+    private EventoService eventoService;
+    private Evento evento, eventoSalvo;
 
+
+    @BeforeEach
+    void init() {
+        MockitoAnnotations.initMocks(this);
+        eventoService = new EventoServiceImpl(eventoRepository);
+        evento = geradorDeEvento();
+    }
 
     @Test
     @DisplayName("Deve criar um novo evento")
     void deveCriarEvento() {
-        evento = geradorDeEvento();
 
         BDDMockito.given(eventoRepository.save(Mockito.any(Evento.class))).willReturn(evento);
 
@@ -50,7 +50,6 @@ public class EventoServiceTest {
     @Test
     @DisplayName("Deve buscar pelo Id")
     void deveBuscarPeloId() {
-        evento = geradorDeEvento();
         BDDMockito.given(eventoRepository.findById(Mockito.anyLong())).willReturn(Optional.of(evento));
 
         EventoDTO eventoDTO = eventoService.findById(1L);
@@ -86,14 +85,12 @@ public class EventoServiceTest {
         RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
                 eventoService.deleteById(1L));
 
-        assertTrue(runtimeException.getMessage().contains("Não encontrado evento com este Id"));
+        assertEquals(runtimeException.getMessage(), "Não encontrado evento com este Id");
     }
 
     @Test
     @DisplayName("Deve atualizar um evento")
     void deveAtualizarEvento() {
-        evento = geradorDeEvento();
-
         BDDMockito.given(eventoRepository.save(Mockito.any(Evento.class))).willReturn(new Evento());
 
         Assertions.assertThat(eventoService.save(evento)).isNotNull();
