@@ -44,6 +44,7 @@ public class UsuarioServiceTest {
         pageable = PageRequest.of(1, 1);
         usuarioService = new UsuarioServiceImpl(usuarioRepository, passwordEncoder);
 
+        usuario = new Usuario();
         usuarioNaoSalvo = UsuarioFactory.geraAdminNaoSalvo();
         usuarioSalvo = UsuarioFactory.geraAdminSalvo();
     }
@@ -89,16 +90,13 @@ public class UsuarioServiceTest {
     @Test
     @DisplayName("Deve deletar Usuario pelo id")
     void deveDeletarPeloId() {
-        usuario = Usuario.builder()
-                .login("Teste 06")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        usuarioService.deleteById(usuario.getId());
+        Mockito.doNothing().when(usuarioRepository).deleteById(usuarioSalvo.getId());
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.of(usuarioSalvo));
+        usuarioService.deleteById(usuarioSalvo.getId());
+
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.empty());
         RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
-                usuarioService.findById(usuario.getId()));
+                usuarioService.findById(usuarioSalvo.getId()));
 
         assertTrue(runtimeException.getMessage()
                 .contains("Id de Usuário não encontrado"));
@@ -108,54 +106,35 @@ public class UsuarioServiceTest {
     @Test
     @DisplayName("Deve atualizar um Usuario")
     void deveAtualizarUmUsuario() {
-        usuario = Usuario.builder()
-                .login("Teste 07")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        Usuario usuarioModificado = usuarioService.save(usuario);
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId()))
+                .thenReturn(Optional.of(usuarioSalvo));
 
-        usuarioModificado.setLogin("Login Modificado");
-        usuarioModificado.setPassword("321");
-        usuarioModificado.setAdmin(false);
+        usuario.setLogin("Login Modificado");
+        usuario.setPassword("321");
+        usuario.setAdmin(false);
 
-        usuario.setLogin("Usuario Modificado");
-        usuarioService.updateUsuario(usuario.getId(), usuarioModificado);
+        Mockito.when(usuarioRepository.save(usuarioSalvo)).thenReturn(usuario);
+        usuarioService.updateUsuario(usuarioSalvo.getId(), usuario);
 
-        assertThat(usuario.getId()).isEqualTo(usuarioModificado.getId());
-        assertThat(usuario.getLogin()).isNotEqualTo(usuarioModificado.getLogin());
-        assertThat(usuario.getPassword()).isNotEqualTo(usuarioModificado.getPassword());
-        assertThat(usuario.isAdmin()).isNotEqualTo(usuarioModificado.isAdmin());
+        assertThat(usuarioSalvo.getLogin()).isNotEqualTo(usuario.getLogin());
+        assertThat(usuarioSalvo.getPassword()).isNotEqualTo(usuario.getPassword());
+        assertThat(usuarioSalvo.isAdmin()).isNotEqualTo(usuario.isAdmin());
     }
 
     @Test
     @DisplayName("Deve buscar pelo login")
     void deveBuscarPeloLogin() {
-        usuario = Usuario.builder()
-                .login("Teste 08")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        assertThat(usuario.getLogin())
-                .isEqualTo(usuarioService.findByLogin(usuario.getLogin()).getLogin());
+        Mockito.when(usuarioRepository.findByLogin(usuarioSalvo.getLogin())).thenReturn(Optional.of(usuarioSalvo));
+        assertThat(usuarioSalvo.getLogin())
+                .isEqualTo(usuarioService.findByLogin(usuarioSalvo.getLogin()).getLogin());
     }
 
     @Test
     @DisplayName("Deve retornar true se já existe login cadastrado")
     void deveRetornarSeExisteLogin() {
 
-        usuario = Usuario.builder()
-                .login("Teste 09")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
+        Mockito.when(usuarioRepository.existsByLogin(usuarioSalvo.getLogin())).thenReturn(true);
 
-        usuarioService.save(usuario);
-
-        Assertions.assertTrue(usuarioService.existsByLogin(usuario.getLogin()));
+        Assertions.assertTrue(usuarioService.existsByLogin(usuarioSalvo.getLogin()));
     }
 }

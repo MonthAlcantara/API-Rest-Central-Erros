@@ -38,7 +38,7 @@ public class UsuarioFactory {
                 .id(1L)
                 .login("Teste")
                 .password("123")
-                .admin(false)
+                .admin(true)
                 .build();
     }
 }
