@@ -86,8 +86,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         Optional<Usuario> userInfo = this.usuarioRepository.findById(id);
 
         return userInfo.map(u -> {
-            u.setPassword(u.getPassword());
-            u.setLogin(u.getLogin());
+            u.setPassword(user.getPassword());
+            u.setLogin(user.getLogin());
             return this.usuarioRepository.save(u);
         }).orElseThrow(() -> new RecursoNotFound("Usuario não encontrado"));
 
