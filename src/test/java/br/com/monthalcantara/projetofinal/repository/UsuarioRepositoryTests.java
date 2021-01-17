@@ -1,36 +1,42 @@
 package br.com.monthalcantara.projetofinal.repository;
 
 import br.com.monthalcantara.projetofinal.model.Usuario;
+import br.com.monthalcantara.projetofinal.util.UsuarioFactory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@ActiveProfiles("test")
+@DataJpaTest
 class UsuarioRepositoryTests {
 
-    Usuario usuario, usuarioSalvo;
+    private Usuario usuario;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
+
+    @BeforeEach
+    public void init() {
+        usuario = UsuarioFactory.geraAdminNaoSalvo();
+        usuarioRepository.save(usuario);
+    }
 
     @Test
     @DisplayName("Deve salvar um usuario no banco de dados")
     void deveCriarUsuario() {
-        usuario = geradorDeUsuario();
-        usuarioSalvo = usuarioRepository.save(usuario);
-
-        Assertions.assertNotNull(usuarioSalvo);
+        Assertions.assertNotNull(usuario);
     }
 
     @Test
     @DisplayName("Deve buscar um usuario pelo ID")
     void deveBuscarUsuarioPeloId() {
-        usuario = geradorDeUsuario();
-        usuarioRepository.save(usuario);
+
         assertThat(usuarioRepository.findById(usuario.getId())).isPresent();
 
 
@@ -39,8 +45,7 @@ class UsuarioRepositoryTests {
     @Test
     @DisplayName("Deve deletar usuario pelo id")
     void deveDeletarPeloId() {
-        usuario = geradorDeUsuario();
-        usuarioRepository.save(usuario);
+
         usuarioRepository.delete(usuario);
         assertThat(usuarioRepository.findById(usuario.getId())).isNotPresent();
 
@@ -50,18 +55,16 @@ class UsuarioRepositoryTests {
     @Test
     @DisplayName("Deve atualizar um usuario")
     void deveAtualizarUmUsuario() {
-        usuario = geradorDeUsuario();
-        Usuario usuarioModificado = usuarioRepository.save(usuario);
+
+        Usuario usuarioModificado = usuario;
 
         usuarioModificado.setLogin("Login Modificado");
         usuarioModificado.setPassword("321");
         usuarioModificado.setAdmin(false);
 
-        usuario.setLogin("Usuario Modificado");
         usuarioRepository.save(usuarioModificado);
 
         assertThat(usuario.getId()).isEqualTo(usuarioModificado.getId());
-        assertThat(usuario.getLogin()).isNotEqualTo(usuarioModificado.getLogin());
         assertThat(usuario.getPassword()).isNotEqualTo(usuarioModificado.getPassword());
         assertThat(usuario.isAdmin()).isNotEqualTo(usuarioModificado.isAdmin());
     }
@@ -69,8 +72,7 @@ class UsuarioRepositoryTests {
     @Test
     @DisplayName("Deve buscar um usuario pelo login")
     void deveBuscarPeloLogin() {
-        usuario = geradorDeUsuario();;
-        usuarioRepository.save(usuario);
+
         assertThat(usuario)
                 .isEqualTo(usuarioRepository.findByLogin(usuario.getLogin()).get());
     }
@@ -79,20 +81,8 @@ class UsuarioRepositoryTests {
     @DisplayName("Deve retornar true se já existe login cadastrado")
     void deveRetornarSeExisteLogin() {
 
-        usuario = geradorDeUsuario();
-
-        usuarioRepository.save(usuario);
-
         Assertions.assertTrue(usuarioRepository.existsByLogin(usuario.getLogin()));
     }
 
-    private Usuario geradorDeUsuario(){
-        return Usuario.builder()
-                .login("Teste")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-    }
 
 }

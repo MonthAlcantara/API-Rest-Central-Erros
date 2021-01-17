@@ -4,134 +4,85 @@ import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
+import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
+import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import br.com.monthalcantara.projetofinal.util.UsuarioFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@ExtendWith({SpringExtension.class})
+
 public class UsuarioServiceTest {
-   private Usuario usuario, usuarioSalvo;
 
-    @Autowired
+    private Usuario usuario, usuarioSalvo, usuarioNaoSalvo;
+
     private UsuarioService usuarioService;
+    @Mock
+    private UsuarioRepository usuarioRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
-    private Pageable pageable = PageRequest.of(1,1);
+    private Pageable pageable;
 
     @BeforeEach
-    public void init(){
-        usuario = UsuarioFactory.geraAdminNaoSalvo();
-        usuarioService.save(usuario);
-    }
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        pageable = PageRequest.of(1, 1);
+        usuarioService = new UsuarioServiceImpl(usuarioRepository, passwordEncoder);
 
-    @Test
-    @DisplayName("Deve carregar usuário pelo username")
-    void deveCarregarUsuarioPeloUsername() {
-//        usuario = Usuario.builder()
-//                .login("Teste 01")
-//                .password("123")
-//                .admin(true)
-//                .id(1L)
-//                .build();
-//
-//        usuarioService.save(usuario);
-
-        UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getLogin());
-        assertThat(userDetails.getUsername()).isEqualTo(usuario.getLogin());
-        assertThat(userDetails.getPassword()).isEqualTo(usuario.getPassword());
-
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro ao não encontrar Login")
-    void deveLancarErroLoginInvalido() {
-
-        RuntimeException runtimeException = assertThrows(UsernameNotFoundException.class, () ->
-                usuarioService.loadUserByUsername("login Inválido"));
-        assertThat(runtimeException.getMessage()).contains("Usuário não encontrado");
-    }
-
-   // @Test
-   // @DisplayName("Deve autenticar usuario")
-   // @Disabled
-    void deveAutenticarUsuario() {
-        usuario = Usuario.builder()
-                .login("Teste 02")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        UserDetails userDetails = usuarioService.autenticar(usuario);
-        assertThat(userDetails).isNotNull();
+        usuario = new Usuario();
+        usuarioNaoSalvo = UsuarioFactory.geraAdminNaoSalvo();
+        usuarioSalvo = UsuarioFactory.geraAdminSalvo();
     }
 
     @Test
     @DisplayName("Deve criar um novo usuário")
     void deveCriarUsuario() {
-        usuario = Usuario.builder()
-                .login("Teste 03")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioSalvo = usuarioService.save(usuario);
+        Mockito.when(usuarioRepository.save(usuarioNaoSalvo)).thenReturn(usuarioSalvo);
+        usuario = usuarioService.save(usuarioNaoSalvo);
 
         Assertions.assertEquals(usuario, usuarioSalvo);
+        Assertions.assertNotNull(usuario);
     }
 
     @Test
     @DisplayName("Deve lançar erro se Login ja existe")
     void naoDeveCriarUsuarioLoginRepetido() {
-        usuario = Usuario.builder()
-                .login("Teste 04")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        RuntimeException runtimeException = Assertions
-                .assertThrows(RegraNegocioException.class, () -> usuarioService.save(usuario));
+        Mockito.when(usuarioRepository.existsByLogin(usuarioNaoSalvo.getLogin())).thenReturn(true);
+        try {
+            usuarioService.save(usuarioNaoSalvo);
+        } catch (RegraNegocioException e) {
 
-        Assertions
-                .assertTrue(runtimeException.getMessage().contains("Ja existe um usuário com esse login. Por favor escolha outro"));
+        } finally {
+            RuntimeException runtimeException = Assertions
+                    .assertThrows(RegraNegocioException.class, () -> usuarioService.save(usuarioNaoSalvo));
+
+            Assertions
+                    .assertTrue(runtimeException.getMessage().contains("Ja existe um usuário com esse login. Por favor escolha outro"));
+
+        }
     }
 
     @Test
     @DisplayName("Deve buscar um usuario pelo ID")
     void deveBuscarUsuarioPeloId() {
-        usuario = Usuario.builder()
-                .login("Teste 05")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        UsuarioDTO usuarioEncontrado = usuarioService.findById(usuario.getId());
+
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.of(usuarioSalvo));
+        UsuarioDTO usuarioEncontrado = usuarioService.findById(usuarioSalvo.getId());
 
         assertThat(usuarioEncontrado).isNotNull();
     }
@@ -139,16 +90,13 @@ public class UsuarioServiceTest {
     @Test
     @DisplayName("Deve deletar Usuario pelo id")
     void deveDeletarPeloId() {
-        usuario = Usuario.builder()
-                .login("Teste 06")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        usuarioService.deleteById(usuario.getId());
+        Mockito.doNothing().when(usuarioRepository).deleteById(usuarioSalvo.getId());
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.of(usuarioSalvo));
+        usuarioService.deleteById(usuarioSalvo.getId());
+
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.empty());
         RuntimeException runtimeException = assertThrows(RecursoNotFound.class, () ->
-                usuarioService.findById(usuario.getId()));
+                usuarioService.findById(usuarioSalvo.getId()));
 
         assertTrue(runtimeException.getMessage()
                 .contains("Id de Usuário não encontrado"));
@@ -158,54 +106,35 @@ public class UsuarioServiceTest {
     @Test
     @DisplayName("Deve atualizar um Usuario")
     void deveAtualizarUmUsuario() {
-        usuario = Usuario.builder()
-                .login("Teste 07")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        Usuario usuarioModificado = usuarioService.save(usuario);
+        Mockito.when(usuarioRepository.findById(usuarioSalvo.getId()))
+                .thenReturn(Optional.of(usuarioSalvo));
 
-        usuarioModificado.setLogin("Login Modificado");
-        usuarioModificado.setPassword("321");
-        usuarioModificado.setAdmin(false);
+        usuario.setLogin("Login Modificado");
+        usuario.setPassword("321");
+        usuario.setAdmin(false);
 
-        usuario.setLogin("Usuario Modificado");
-        usuarioService.updateUsuario(usuario.getId(), usuarioModificado);
+        Mockito.when(usuarioRepository.save(usuarioSalvo)).thenReturn(usuario);
+        usuarioService.updateUsuario(usuarioSalvo.getId(), usuario);
 
-        assertThat(usuario.getId()).isEqualTo(usuarioModificado.getId());
-        assertThat(usuario.getLogin()).isNotEqualTo(usuarioModificado.getLogin());
-        assertThat(usuario.getPassword()).isNotEqualTo(usuarioModificado.getPassword());
-        assertThat(usuario.isAdmin()).isNotEqualTo(usuarioModificado.isAdmin());
+        assertThat(usuarioSalvo.getLogin()).isNotEqualTo(usuario.getLogin());
+        assertThat(usuarioSalvo.getPassword()).isNotEqualTo(usuario.getPassword());
+        assertThat(usuarioSalvo.isAdmin()).isNotEqualTo(usuario.isAdmin());
     }
 
     @Test
     @DisplayName("Deve buscar pelo login")
     void deveBuscarPeloLogin() {
-        usuario = Usuario.builder()
-                .login("Teste 08")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
-        usuarioService.save(usuario);
-        assertThat(usuario.getLogin())
-                .isEqualTo(usuarioService.findByLogin(usuario.getLogin()).getLogin());
+        Mockito.when(usuarioRepository.findByLogin(usuarioSalvo.getLogin())).thenReturn(Optional.of(usuarioSalvo));
+        assertThat(usuarioSalvo.getLogin())
+                .isEqualTo(usuarioService.findByLogin(usuarioSalvo.getLogin()).getLogin());
     }
 
     @Test
     @DisplayName("Deve retornar true se já existe login cadastrado")
     void deveRetornarSeExisteLogin() {
 
-        usuario = Usuario.builder()
-                .login("Teste 09")
-                .password("123")
-                .admin(true)
-                .id(1L)
-                .build();
+        Mockito.when(usuarioRepository.existsByLogin(usuarioSalvo.getLogin())).thenReturn(true);
 
-        usuarioService.save(usuario);
-
-        Assertions.assertTrue(usuarioService.existsByLogin(usuario.getLogin()));
+        Assertions.assertTrue(usuarioService.existsByLogin(usuarioSalvo.getLogin()));
     }
 }

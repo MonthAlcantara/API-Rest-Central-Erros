@@ -3,20 +3,19 @@ package br.com.monthalcantara.projetofinal.controller;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
-import br.com.monthalcantara.projetofinal.security.jwt.JwtService;
 import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,7 +27,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@ActiveProfiles("test")
+@WebMvcTest
 @AutoConfigureMockMvc
 public class UsuarioControllerTest {
 
@@ -38,23 +38,17 @@ public class UsuarioControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @MockBean
-    Pageable pageable;
-
-    @MockBean
-    JwtService jwtService;
-
-    @MockBean
+    @Mock
     UsuarioRepository usuarioRepository;
 
-    @MockBean
+    @Mock
     UsuarioServiceImpl usuarioService;
 
     @Test
     @DisplayName("Deve criar um novo usuario")
     public void deveCriarUsuario() throws Exception {
         UsuarioDTO usuario = geradorDeUsuario();
-        BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(usuario.build());
+        BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(usuario.toModel());
 
         String json = geradorDeJson(usuario);
 
@@ -79,7 +73,7 @@ public class UsuarioControllerTest {
         UsuarioDTO usuario = geradorDeUsuario();
 
 
-        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.build());
+        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.toModel());
         usuario.setLogin(null);
         String json = geradorDeJson(usuario);
 
@@ -99,9 +93,7 @@ public class UsuarioControllerTest {
     @DisplayName("Não deve criar usuario sem senha")
     public void naoDeveCriarUsarioSemSenha() throws Exception {
         UsuarioDTO usuario = geradorDeUsuario();
-
-
-        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.build());
+        BDDMockito.given(usuarioService.save(Mockito.any(Usuario.class))).willReturn(usuario.toModel());
         usuario.setPassword(null);
         String json = geradorDeJson(usuario);
 
@@ -122,7 +114,7 @@ public class UsuarioControllerTest {
     @Disabled
     public void deveAtualizarUsuario() throws Exception {
 
-        Usuario novoUsuario = geradorDeUsuario().build();
+        Usuario novoUsuario = geradorDeUsuario().toModel();
         novoUsuario.setAdmin(false);
         String json = geradorDeJson(novoUsuario);
 
@@ -147,7 +139,7 @@ public class UsuarioControllerTest {
     @Disabled
     public void deveDeletarUsuaio() throws Exception {
 
-        BDDMockito.given(usuarioRepository.findById(anyLong()))
+        BDDMockito.given(usuarioRepository.findById(11L))
                 .willReturn(Optional.of(Usuario.builder().id(11L).build()));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -170,6 +162,4 @@ public class UsuarioControllerTest {
     private String geradorDeJson(Object o) throws Exception {
         return new ObjectMapper().writeValueAsString(o);
     }
-
-
 }
