@@ -1,7 +1,9 @@
 package br.com.monthalcantara.projetofinal.controller;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
+import br.com.monthalcantara.projetofinal.model.Usuario;
 import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
+import br.com.monthalcantara.projetofinal.util.UsuarioFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -15,22 +17,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.constraints.AssertTrue;
 import java.util.Arrays;
 import java.util.List;
 
-@ActiveProfiles("test")
+
 class UsuarioControllerUnitTest {
 
 
     private UsuarioService usuarioService = Mockito.mock(UsuarioService.class);
     private UsuarioController controller = new UsuarioController(usuarioService);
     private Pageable pageable = PageRequest.of(1, 1);
+    private UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
     private UsuarioDTO usuarioTeste;
+    private Usuario usuario;
 
 
     @BeforeEach
     void init() {
+        usuario = UsuarioFactory.geraAdminSalvo();
         usuarioTeste = geraNovoUsuarioDTO("Teste");
     }
 
@@ -71,9 +78,13 @@ class UsuarioControllerUnitTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("Deveria salvar um Usuario")
     void save() {
+        Mockito.when(usuarioService.save(Mockito.any(Usuario.class))).thenReturn(usuario);
+        ResponseEntity responseEntity = controller.save(usuarioTeste, builder);
+        Assert.assertNotNull(responseEntity.getBody());
+        Assert.assertEquals(responseEntity.getBody().getClass(), UsuarioDTO.class);
+        Assert.assertEquals(responseEntity.getHeaders().getLocation().toString(), String.format("/v1/usuarios/%s",usuario.getId()));
 
     }
 
