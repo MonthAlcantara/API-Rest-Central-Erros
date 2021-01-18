@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 
 @SpringBootTest
-@ActiveProfiles("test")
 public class EventoRepositoryTests {
     Evento evento, eventoSalvo;
 
