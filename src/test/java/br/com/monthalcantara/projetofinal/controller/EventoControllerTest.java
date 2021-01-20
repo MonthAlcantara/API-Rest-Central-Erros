@@ -3,19 +3,25 @@ package br.com.monthalcantara.projetofinal.controller;
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;
+import br.com.monthalcantara.projetofinal.repository.EventoRepository;
 import br.com.monthalcantara.projetofinal.service.implementacoes.EventoServiceImpl;
+import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,25 +30,34 @@ import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest
+@AutoConfigureWebMvc
+@WebMvcTest
 public class EventoControllerTest {
     static String EVENTO_API = "/v1/eventos";
 
-    @MockBean
-    EventoServiceImpl eventoService;
-
     @Autowired
     MockMvc mvc;
+    @Mock
+    private EventoService eventoService;
+    @Mock
+    private EventoRepository repository;
+    private EventoController eventoController;
+    private Evento evento;
+    private UsuarioDTO usuario;
+
+    @BeforeEach
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        eventoController = new EventoController(eventoService);
+        evento = geradorDeEventos();
+        usuario = geradorDeUsuario();
+    }
 
     @Test
     @DisplayName("Deve criar um novo evento")
-    @Disabled
     public void deveCriarEvento() throws Exception {
-        Evento evento = geradorDeEventos();
-        UsuarioDTO usuario = geradorDeUsuario();
-        BDDMockito.given(eventoService.save(Mockito.any(Evento.class))).willReturn(evento);
+
+        Mockito.when(eventoService.save(Mockito.any(Evento.class))).thenReturn(evento);
         String json = geradorDeJson(evento);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders

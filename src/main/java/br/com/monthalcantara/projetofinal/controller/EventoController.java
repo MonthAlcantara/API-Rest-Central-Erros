@@ -22,9 +22,9 @@ import javax.validation.Valid;
 @RequestMapping("/v1/eventos")
 public class EventoController {
 
-
     private EventoService eventoService;
 
+    @Autowired
     public EventoController(EventoService eventoService) {
         this.eventoService = eventoService;
     }
