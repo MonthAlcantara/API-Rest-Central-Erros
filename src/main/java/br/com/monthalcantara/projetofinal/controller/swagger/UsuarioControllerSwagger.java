@@ -55,11 +55,11 @@ public interface UsuarioControllerSwagger {
 
     @DeleteMapping("/admin/{id}")
     @ApiOperation("Exclui um Usuário")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuário não localizado"),
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
-            @ApiResponse(code = 200, message = "Usuário localizado"),
-            @ApiResponse(code = 201, message = "Usuário excluído com sucesso")})
+            @ApiResponse(code = 204, message = "Usuário excluído com sucesso")})
     public void deleteById(@PathVariable("id") Long id);
 
 

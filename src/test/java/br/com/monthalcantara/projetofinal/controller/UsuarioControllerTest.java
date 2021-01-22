@@ -2,33 +2,27 @@ package br.com.monthalcantara.projetofinal.controller;
 
 import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.model.Usuario;
-import br.com.monthalcantara.projetofinal.repository.UsuarioRepository;
 import br.com.monthalcantara.projetofinal.service.implementacoes.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles("test")
-@WebMvcTest
+@SpringBootTest
 @AutoConfigureMockMvc
 public class UsuarioControllerTest {
 
@@ -38,17 +32,14 @@ public class UsuarioControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @Mock
-    UsuarioRepository usuarioRepository;
-
-    @Mock
-    UsuarioServiceImpl usuarioService;
+    UsuarioServiceImpl usuarioService = Mockito.mock(UsuarioServiceImpl.class);
 
     @Test
     @DisplayName("Deve criar um novo usuario")
     public void deveCriarUsuario() throws Exception {
         UsuarioDTO usuario = geradorDeUsuario();
-        BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(usuario.toModel());
+        Usuario toModel = usuario.toModel();
+        BDDMockito.given(usuarioService.save(any(Usuario.class))).willReturn(toModel);
 
         String json = geradorDeJson(usuario);
 
@@ -62,8 +53,7 @@ public class UsuarioControllerTest {
                 .perform(request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("login").value("Teste 01"))
-                .andExpect(jsonPath("admin").value(true))
-                .andExpect(jsonPath("password").value("123"));
+                .andExpect(jsonPath("admin").value(true));
 
     }
 
@@ -111,14 +101,13 @@ public class UsuarioControllerTest {
 
     @Test
     @DisplayName("Deve atualizar um usuario")
-    @Disabled
     public void deveAtualizarUsuario() throws Exception {
 
         Usuario novoUsuario = geradorDeUsuario().toModel();
-        novoUsuario.setAdmin(false);
+
         String json = geradorDeJson(novoUsuario);
 
-        BDDMockito.given(usuarioService.updateUsuario(anyLong(), any(Usuario.class))).willReturn(novoUsuario);
+        Mockito.when(usuarioService.updateUsuario(anyLong(), any(Usuario.class))).thenReturn(novoUsuario);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .put(USUARIO_API.concat("/admin/1"))
@@ -128,22 +117,20 @@ public class UsuarioControllerTest {
 
         mvc
                 .perform(request)
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andExpect(jsonPath("login").value("Teste 01"))
-                .andExpect(jsonPath("password").value("123"))
-                .andExpect(jsonPath("admin").value(false));
+                .andExpect(jsonPath("password").value(novoUsuario.getPassword()))
+                .andExpect(jsonPath("admin").value(true));
     }
 
     @Test
     @DisplayName("Deve deletar um usuario")
-    @Disabled
     public void deveDeletarUsuaio() throws Exception {
 
-        BDDMockito.given(usuarioRepository.findById(11L))
-                .willReturn(Optional.of(Usuario.builder().id(11L).build()));
+        Mockito.doNothing().when(usuarioService).deleteById(anyLong());
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .delete(USUARIO_API.concat("/11"));
+                .delete(USUARIO_API.concat("/admin/1"));
 
         mvc
                 .perform(request)
@@ -154,7 +141,7 @@ public class UsuarioControllerTest {
     private UsuarioDTO geradorDeUsuario() {
         return UsuarioDTO.builder()
                 .login("Teste 01")
-                .password("123")
+                .password(new BCryptPasswordEncoder().encode("123"))
                 .admin(true)
                 .build();
     }
