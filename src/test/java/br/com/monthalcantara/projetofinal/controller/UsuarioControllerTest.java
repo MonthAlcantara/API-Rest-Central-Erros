@@ -28,7 +28,6 @@ public class UsuarioControllerTest {
 
     static String USUARIO_API = "/v1/usuarios";
 
-
     @Autowired
     MockMvc mvc;
 

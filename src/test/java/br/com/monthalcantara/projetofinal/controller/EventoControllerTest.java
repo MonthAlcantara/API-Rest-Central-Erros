@@ -1,92 +1,63 @@
 package br.com.monthalcantara.projetofinal.controller;
 
-import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.enums.Level;
 import br.com.monthalcantara.projetofinal.model.Evento;
-import br.com.monthalcantara.projetofinal.repository.EventoRepository;
 import br.com.monthalcantara.projetofinal.service.interfaces.EventoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureWebMvc
-@WebMvcTest
 public class EventoControllerTest {
-    static String EVENTO_API = "/v1/eventos";
 
-    @Autowired
-    MockMvc mvc;
-    @Mock
     private EventoService eventoService;
-    @Mock
-    private EventoRepository repository;
     private EventoController eventoController;
-    private Evento evento;
-    private UsuarioDTO usuario;
+    private Evento eventoSalvo, eventoNaoSalvo;
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
+
         eventoController = new EventoController(eventoService);
-        evento = geradorDeEventos();
-        usuario = geradorDeUsuario();
+        eventoSalvo = geradorDeEvento();
+        eventoNaoSalvo = geradorDeEventoNaoSalvo();
     }
 
     @Test
-    @DisplayName("Deve criar um novo evento")
-    public void deveCriarEvento() throws Exception {
+    @DisplayName("Deveria salvar novo evento")
+    void test() {
+        Mockito.when(eventoService.save(eventoNaoSalvo)).thenReturn(eventoSalvo);
+        ResponseEntity responseEntity = eventoController.create(eventoNaoSalvo);
 
-        Mockito.when(eventoService.save(Mockito.any(Evento.class))).thenReturn(evento);
-        String json = geradorDeJson(evento);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(EVENTO_API)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc
-                .perform(request)
-                .andExpect(status().isCreated());
-
+        Assert.assertNotNull(responseEntity.getBody());
+        Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
     }
 
-    private Evento geradorDeEventos() {
+    private Evento geradorDeEvento() {
         return Evento.builder()
                 .descricao("Teste")
                 .level(Level.ERROR)
-                .data(LocalDateTime.parse("2020-08-02T11:11:35"))
+                .data(LocalDateTime.of(2020, 8, 02, 11, 11, 35))
                 .origem("Teste")
                 .quantidade(1)
                 .id(1L)
-                .log("Teste").build();
-    }
-
-    private UsuarioDTO geradorDeUsuario() {
-        return UsuarioDTO.builder()
-                .login("Teste 01")
-                .password("123")
-                .admin(true)
+                .log("Teste")
                 .build();
     }
 
-    private String geradorDeJson(Object o) throws Exception {
-        return new ObjectMapper().writeValueAsString(o);
+    private Evento geradorDeEventoNaoSalvo() {
+        return Evento.builder()
+                .descricao("Teste")
+                .level(Level.ERROR)
+                .data(LocalDateTime.of(2020, 8, 02, 11, 11, 35))
+                .origem("Teste")
+                .quantidade(1)
+                .log("Teste")
+                .build();
     }
-
 }
