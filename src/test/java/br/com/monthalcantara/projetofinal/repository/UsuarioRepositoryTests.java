@@ -66,7 +66,7 @@ class UsuarioRepositoryTests {
 
         assertThat(usuario.getId()).isEqualTo(usuarioModificado.getId());
         assertThat(usuario.getPassword()).isEqualTo(usuarioModificado.getPassword());
-        assertThat(usuario.isAdmin()).isNotEqualTo(usuarioModificado.isAdmin());
+        assertThat(usuario.isAdmin()).isEqualTo(usuarioModificado.isAdmin());
     }
 
     @Test

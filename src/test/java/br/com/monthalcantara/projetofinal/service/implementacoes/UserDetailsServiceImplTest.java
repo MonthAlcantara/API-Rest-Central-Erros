@@ -8,12 +8,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,7 +45,7 @@ class UserDetailsServiceImplTest {
     @Test
     @DisplayName("Deve carregar usuário pelo username")
     void deveCarregarUsuarioPeloUsername() {
-
+        Mockito.when( usuarioRepository.findByLogin(Mockito.anyString())).thenReturn(Optional.of(usuario));
         UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getLogin());
         assertThat(userDetails.getUsername()).isEqualTo(usuario.getLogin());
         assertThat(userDetails.getPassword()).isEqualTo(usuario.getPassword());

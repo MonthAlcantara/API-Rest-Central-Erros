@@ -22,7 +22,7 @@ public class EventoControllerTest {
 
     @BeforeEach
     public void init() {
-
+        eventoService = Mockito.mock(EventoService.class);
         eventoController = new EventoController(eventoService);
         eventoSalvo = geradorDeEvento();
         eventoNaoSalvo = geradorDeEventoNaoSalvo();

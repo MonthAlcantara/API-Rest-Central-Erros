@@ -6,7 +6,6 @@ import br.com.monthalcantara.projetofinal.service.interfaces.UsuarioService;
 import br.com.monthalcantara.projetofinal.util.UsuarioFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,10 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.constraints.AssertTrue;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,29 +24,34 @@ import java.util.List;
 class UsuarioControllerUnitTest {
 
 
-    private UsuarioService usuarioService = Mockito.mock(UsuarioService.class);
-    private UsuarioController controller = new UsuarioController(usuarioService);
-    private Pageable pageable = PageRequest.of(1, 1);
-    private UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
-    private UsuarioDTO usuarioTeste;
-    private Usuario usuario;
+    private UsuarioService usuarioService;
+    private UsuarioController controller;
+    private Pageable pageable;
+    private UriComponentsBuilder builder;
+    private UsuarioDTO usuarioTesteDto;
+    private Usuario usuario, usuarioTeste;
 
 
     @BeforeEach
     void init() {
+        builder = UriComponentsBuilder.newInstance();
+        pageable = PageRequest.of(1, 1);
+        usuarioService = Mockito.mock(UsuarioService.class);
+        controller = new UsuarioController(usuarioService);
         usuario = UsuarioFactory.geraAdminSalvo();
-        usuarioTeste = geraNovoUsuarioDTO("Teste");
+        usuarioTeste = geraNovoUsuario("Teste");
+        usuarioTesteDto = geraNovoUsuarioDto("Teste");
     }
 
     @Test
     @DisplayName("Deveria retornar uma página de Usuarios DTO")
     void findAll() {
-        Mockito.when(usuarioService.findAll(pageable)).thenReturn(geraPageUsuariosDTO());
+        Mockito.when(usuarioService.findAll(pageable)).thenReturn(geraPageUsuarios());
 
         ResponseEntity responseEntity = controller.findAll(pageable);
 
         Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals(responseEntity.getBody(), geraPageUsuariosDTO());
+        Assert.assertEquals(responseEntity.getBody(), geraPageUsuariosDto());
     }
 
     @Test
@@ -81,23 +83,40 @@ class UsuarioControllerUnitTest {
     @DisplayName("Deveria salvar um Usuario")
     void save() {
         Mockito.when(usuarioService.save(Mockito.any(Usuario.class))).thenReturn(usuario);
-        ResponseEntity responseEntity = controller.save(usuarioTeste, builder);
+        ResponseEntity responseEntity = controller.save(usuarioTesteDto, builder);
         Assert.assertNotNull(responseEntity.getBody());
         Assert.assertEquals(responseEntity.getBody().getClass(), UsuarioDTO.class);
-        Assert.assertEquals(responseEntity.getHeaders().getLocation().toString(), String.format("/v1/usuarios/%s",usuario.getId()));
+        Assert.assertEquals(responseEntity.getHeaders().getLocation().toString(), String.format("/v1/usuarios/%s", usuario.getId()));
 
     }
 
 
-    public Page<UsuarioDTO> geraPageUsuariosDTO() {
-        List<UsuarioDTO> usuarioDTOS = Arrays.asList(geraNovoUsuarioDTO("Teste1"),
-                geraNovoUsuarioDTO("Teste2"),
-                geraNovoUsuarioDTO("Teste3"));
+    public Page<Usuario> geraPageUsuarios() {
+        List<Usuario> usuarioDTO = Arrays.asList(geraNovoUsuario("Teste1"),
+                geraNovoUsuario("Teste2"),
+                geraNovoUsuario("Teste3"));
 
-        return new PageImpl<>(usuarioDTOS);
+        return new PageImpl<>(usuarioDTO);
     }
 
-    public UsuarioDTO geraNovoUsuarioDTO(String login) {
+    public Page<UsuarioDTO> geraPageUsuariosDto() {
+        List<UsuarioDTO> usuarioDTO = Arrays.asList(geraNovoUsuarioDto("Teste1"),
+                geraNovoUsuarioDto("Teste2"),
+                geraNovoUsuarioDto("Teste3"));
+
+        return new PageImpl<>(usuarioDTO);
+    }
+
+    public Usuario geraNovoUsuario(String login) {
+        return Usuario
+                .builder()
+                .admin(true)
+                .login(login)
+                .password("senha")
+                .build();
+    }
+
+    public UsuarioDTO geraNovoUsuarioDto(String login) {
         return UsuarioDTO
                 .builder()
                 .admin(true)

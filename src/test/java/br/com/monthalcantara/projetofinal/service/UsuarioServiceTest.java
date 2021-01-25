@@ -1,6 +1,5 @@
 package br.com.monthalcantara.projetofinal.service;
 
-import br.com.monthalcantara.projetofinal.dto.UsuarioDTO;
 import br.com.monthalcantara.projetofinal.exception.RecursoNotFound;
 import br.com.monthalcantara.projetofinal.exception.RegraNegocioException;
 import br.com.monthalcantara.projetofinal.model.Usuario;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -80,7 +77,7 @@ public class UsuarioServiceTest {
     void deveBuscarUsuarioPeloId() {
 
         Mockito.when(usuarioRepository.findById(usuarioSalvo.getId())).thenReturn(Optional.of(usuarioSalvo));
-        UsuarioDTO usuarioEncontrado = usuarioService.findById(usuarioSalvo.getId());
+        Usuario usuarioEncontrado = usuarioService.findById(usuarioSalvo.getId());
 
         assertThat(usuarioEncontrado).isNotNull();
     }

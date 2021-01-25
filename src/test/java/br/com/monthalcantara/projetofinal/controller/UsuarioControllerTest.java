@@ -116,7 +116,7 @@ public class UsuarioControllerTest {
 
         mvc
                 .perform(request)
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("login").value("Teste 01"))
                 .andExpect(jsonPath("password").value(novoUsuario.getPassword()))
                 .andExpect(jsonPath("admin").value(true));

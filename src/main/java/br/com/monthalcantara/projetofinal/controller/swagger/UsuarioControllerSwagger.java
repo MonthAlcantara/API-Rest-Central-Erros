@@ -60,7 +60,7 @@ public interface UsuarioControllerSwagger {
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
             @ApiResponse(code = 204, message = "Usuário excluído com sucesso")})
-    public void deleteById(@PathVariable("id") Long id);
+    public ResponseEntity deleteById(@PathVariable("id") Long id);
 
 
     @PutMapping("/admin/{id}")
@@ -68,7 +68,6 @@ public interface UsuarioControllerSwagger {
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Usuário não localizado"),
             @ApiResponse(code = 403, message = "Você não possui permissão para visualizar este recurso"),
             @ApiResponse(code = 401, message = "Você não possui credenciais de autenticação válidas"),
-            @ApiResponse(code = 200, message = "Usuário localizado"),
-            @ApiResponse(code = 201, message = "Usuário atualizado com sucesso")})
+            @ApiResponse(code = 200, message = "Usuário localizado")})
     public ResponseEntity update(@PathVariable(value = "id") Long id, @Valid @RequestBody Usuario user);
 }

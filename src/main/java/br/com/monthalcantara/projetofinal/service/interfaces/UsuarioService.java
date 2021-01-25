@@ -9,17 +9,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UsuarioService {
 
-    UsuarioDTO findById(Long id);
+    Usuario findById(Long id);
 
-    UsuarioDTO findByLogin(String login);
+    Usuario findByLogin(String login);
 
     Usuario save(Usuario novoUsuario);
 
     void deleteById(Long id);
 
-    Page<UsuarioDTO> findAll(Pageable pageable);
+    Page<Usuario> findAll(Pageable pageable);
 
     Usuario updateUsuario(Long id, Usuario user);
 
     boolean existsByLogin(String login);
+
 }
